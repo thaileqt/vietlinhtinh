@@ -33,6 +33,20 @@ function App() {
     setCurrentUser(currentUser);
   };
 
+  fetch('https://vietlinhtinh-api-production.up.railway.app/api/genres')
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(data => {
+    console.log('Genres:', data);
+  })
+  .catch(error => {
+    console.error('There was a problem fetching genres:', error);
+  });
+
   return (
     <>
       {/* <div>
