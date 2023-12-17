@@ -10,7 +10,7 @@ const paths = {
         return `/series/${slug}`;
     },
     chapter(seriesSlug, chapterNumber) {
-        return `/series/${seriesSlug}/chap-${chapterNumber}`;
+        return `/series/${seriesSlug}/${chapterNumber}`;
     },
 
     searchByGenre(genre) {

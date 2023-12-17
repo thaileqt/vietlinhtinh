@@ -1,6 +1,6 @@
 import request_utils from "../commons/request_utils";
 
-const API_URL = request_utils + "/api/comment";
+const API_URL = request_utils.host + "/api/comment";
 
 
 

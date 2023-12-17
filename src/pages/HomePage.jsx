@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import "react-multi-carousel/lib/styles.css"; // Import the default styles
 
 // import RecentUpdate from "../components/RecentUpdate";

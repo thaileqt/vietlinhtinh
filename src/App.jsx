@@ -8,6 +8,9 @@ import HomePage from './pages/HomePage';
 import MyNavbar from './components/layout/Navbar';
 import RegisterPage from './pages/RegisterPage';
 import ProfilePage from './pages/ProfilePage';
+import SeriesDetail from './pages/SeriesDetail';
+import SearchResults from './pages/SearchResults';
+import ChapterDetail from './pages/ChapterDetail';
 
 function App() {
   // const [count, setCount] = useState(0)
@@ -49,6 +52,12 @@ function App() {
 
           <Route exact path={"/"} element={<HomePage />} />
           <Route exact path={"/home"} element={<HomePage />} />
+
+          
+          <Route exact path={"/series/:slug"} element={<SeriesDetail />} />
+          <Route exact path={`/series/:slug/:chapterNumber`} element={<ChapterDetail />} />
+
+          <Route exact path={`/search?keyword=:keyword`} element={<SearchResults />} />
         </Routes>
       </div>
     </>
