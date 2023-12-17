@@ -34,7 +34,6 @@ const ChapterDetail = () => {
 
     const [totalChapter, setTotalChapter] = useState(null);
     const [marker, setMarker] = useState(null);
-    const settingMenuRef = useRef(null);
     const [is_like, setIsLike] = useState(user ? null : false);
     const [likeCount, setLikeCount] = useState(null);
     const [commentCount, setCommentCount] = useState(null);
@@ -261,12 +260,9 @@ const ChapterDetail = () => {
         <div style={{ backgroundColor: backgroundColor, fontSize: fontSize }} className="container">
           <ContentRender
             chapterContent={chapter.content}
-            chapterNumber={chapter.chapterNumber}
-            chapterTitle={chapter.title}
             lineSpacing={lineSpacing}
             marker={marker}
             toggleMarker={toggleMarker}
-            ref={seriesReaderRef}
           />
         </div>
 

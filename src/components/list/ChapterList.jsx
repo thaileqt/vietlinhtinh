@@ -3,11 +3,19 @@ import { Link } from "react-router-dom";
 import { List, ListItem, ListItemSecondaryAction, ListItemText, Pagination } from "@mui/material";
 
 import ChapterService from "../../services/chapter.service";
+import PropTypes from "prop-types";
 
 import utils from "../../commons/utils";
 import paths from "../../commons/paths";
 
+ChapterList.propTypes = {
+    slug: PropTypes.string.isRequired
+};
+
 export default function ChapterList({ slug }) {
+    
+    // Your code here
+    
     const [chapters, setChapters] = React.useState([]);
     const [totalPages, setTotalPages] = React.useState(null);
     const size = 20
@@ -56,7 +64,7 @@ export default function ChapterList({ slug }) {
       };
 
     return (
-        <div className="col-md-12"  component="nav">
+        <div className="col-md-12">
             <h5><strong>Danh sách chương</strong></h5>
             <div style={{
             marginTop: "20px",
@@ -84,13 +92,14 @@ export default function ChapterList({ slug }) {
                 <div style={{ padding: "20px" }}>Chưa có chương nào</div>
             )}
             </div>
-            <Pagination count={1} variant="outlined" shape="rounded" onChange={handlePageChange} 
+            {totalPages && <Pagination count={totalPages} variant="outlined" shape="rounded" onChange={handlePageChange} 
                 style={{
                     display: 'flex',
                     alignItems: 'center',
                     marginBottom: '20px'
                 }} 
-            />
+            />}
+            
         </div>
     );
 }

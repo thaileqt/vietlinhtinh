@@ -1,6 +1,7 @@
 import { List, ListItem, ListItemAvatar, ListItemText, Typography, Rating, Avatar, Divider, ListItemSecondaryAction, IconButton } from "@mui/material";
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import utils from "../../commons/utils";
+import { PropTypes } from "prop-types";
 
 const reviewContainerStyle = {
     border: '1px solid #e0e0e0',
@@ -8,13 +9,16 @@ const reviewContainerStyle = {
     padding: 16,
   };
   
-  
-  
-  const commentStyle = {
-    color: '#333',
-  };
+const commentStyle = {
+  color: '#333',
+};
+
+
 
 export default function ReviewList({ reviews }) {
+  ReviewList.propTypes = {
+    reviews: PropTypes.array,
+  };
     return (
         <div>
         {(reviews && reviews.length > 0) ? (
@@ -23,13 +27,13 @@ export default function ReviewList({ reviews }) {
                 <List>
                     <ListItem style={reviewContainerStyle}>
                         <ListItemAvatar>
-                        <Avatar alt={reviews.user.username} src={reviews.user.cover} />
+                        <Avatar alt={review.user.username ? review.user.username : " "} src={review.user.cover} />
                         </ListItemAvatar>
                         <ListItemText
                         primary={
                             <>
-                            <strong>{reviews.user.username}</strong>            
-                            <Rating name="read-only" value={reviews.rating} readOnly />
+                            <strong>{review.user.username}</strong>            
+                            <Rating name="read-only" value={review.rating} readOnly />
                             </>
                             
                         }

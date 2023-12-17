@@ -65,7 +65,7 @@ const Home = () => {
         <SeriesCarousel seriesList={hotSeries} heading={"Truyện Hot"} />
       </div>
 
-      <div >
+      <div className="container">
         <RecentUpdatedSeries />
       </div>
       

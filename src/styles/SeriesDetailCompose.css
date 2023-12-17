@@ -1,0 +1,63 @@
+.series-detail-compose {
+    padding: 20px;
+  }
+  
+  .chapter-list {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .chapter-item {
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    padding: 10px;
+  }
+  
+  .chapter-details {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .chapter-header {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .chapter-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  
+  .chapter-status {
+    font-weight: bold;
+  }
+  
+  .chapter-content {
+    margin-bottom: 5px;
+  }
+  
+  .action-buttons button {
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    color: #fff;
+    border-radius: 3px;
+  }
+  
+  .action-buttons button a {
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  
+  .action-buttons button {
+    background-color: #007bff;
+  }
+  
+  
+  .action-buttons button {
+    background-color: #28a745;
+  }
+  

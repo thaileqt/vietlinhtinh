@@ -4,14 +4,17 @@ import { Box, Typography, List, ListItem, Grid, ListItemSecondaryAction, ListIte
 import SeriesService from '../../services/series.service';
 import SeriesThumbnail from '../avatar/SeriesThumbnail';
 import Genre from '../misc/Genre';
-
+import "../../styles/RecentUpdatedSeries.css";
 import utils from "../../commons/utils";
 import paths from '../../commons/paths';
-
+import PropsType from 'prop-types';
 
 
 
 function RecentSeriesList({recentUpdatedSeries}) {
+    RecentSeriesList.propTypes = {
+        recentUpdatedSeries: PropsType.array.isRequired,
+    };
     const [hoveredIndex, setHoveredIndex] = React.useState(null);
   
     const handleMouseEnter = (index) => {

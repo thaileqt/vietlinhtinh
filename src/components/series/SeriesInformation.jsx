@@ -8,8 +8,14 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import SeriesThumbnail from "../avatar/SeriesThumbnail";
 import Genre from "../misc/Genre";
+import { PropTypes } from "prop-types";
+
+
 
 export default function SeriesInformation({ series }) {
+  SeriesInformation.propTypes = {
+    series: PropTypes.object.isRequired,
+  };
   return (
     <div className="row">
       {series && (

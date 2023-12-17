@@ -1,0 +1,43 @@
+/* RecentSeriesList.css */
+
+.recent-series-container {
+    border-color: #777777;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
+    margin-top: 20px;
+  }
+  
+  .section-header {
+    background-color: black;
+    padding: 10px;
+    color: white;
+  }
+  
+  .series-list {
+    width: 100%;
+    background-color: #fff;
+  }
+  
+  .list-item {
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* .list-item:hover {
+    background-color: #646464;
+  } */
+  
+  .even-item {
+    background-color: #f2f2f2;
+  }
+  
+  .odd-item {
+    background-color: #fff;
+  }
+  
+  .title-text:hover {
+    color: #f50057; /* Change to the desired color */
+  }
+  
+  /* Add other styles as needed */

@@ -11,7 +11,7 @@ const ChapterService = {
     countTotalChapters: (slug) => request_utils.handleGetRequest(API_URL + "/count-by-series-slug/" + slug),
 
     addChapter: (newChapter) => request_utils.handlePostRequest(API_URL + "/create", newChapter),
-    editChapter: (seriesSlug, chapterNumber, newChapterData) => request_utils.handlePostRequest(API_URL + "/update-by-series-and-chapter/" + seriesSlug + "/" + chapterNumber, newChapterData),
+    editChapter: (seriesSlug, chapterNumber, newChapterData) => request_utils.handlePutRequest(API_URL + "/update-by-series-and-chapter/" + seriesSlug + "/" + chapterNumber, newChapterData),
     deleteChapter: (id) => request_utils.handleDeleteRequest(API_URL + "/delete-by-id/" + id),
 }  
 

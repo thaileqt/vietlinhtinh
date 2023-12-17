@@ -3,13 +3,20 @@ import React, { useEffect } from 'react';
 import { Box, CircularProgress, List, Pagination } from '@mui/material';
 import SeriesListItem from '../list/SeriesListItem';
 import SeriesService from '../../services/series.service';
+import { PropTypes } from 'prop-types';
+
+
 
 export default function SeriesSection({profile_username}) {
+  SeriesSection.propTypes = {
+    profile_username: PropTypes.string.isRequired
+  }
   // Assuming you have an array of user-owned series
     const [seriesList, setSeriesList] = React.useState(null);
     const [page, setPage] = React.useState(1);
-    const [size, setSize] = React.useState(10);
     const [totalPages, setTotalPages] = React.useState(null);
+
+    const size = 10;
 
  
   useEffect(() => {
@@ -59,4 +66,4 @@ export default function SeriesSection({profile_username}) {
     
   </div>
   );
-};
+}

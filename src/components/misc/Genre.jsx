@@ -1,7 +1,16 @@
 import PropTypes from 'prop-types';
 import utils from '../../commons/utils';
 
+
+
+
 const Genre = ({ name, size, color, backgroundColor }) => {
+  Genre.propTypes = {
+    name: PropTypes.string.isRequired,
+    size: PropTypes.string,
+    color: PropTypes.string,
+    backgroundColor: PropTypes.string,
+  };
   // You can define different background colors based on genre if needed
   const getBackgroundColor = (genreName) => {
     switch (genreName) {

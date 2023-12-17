@@ -11,6 +11,15 @@ import ProfilePage from './pages/ProfilePage';
 import SeriesDetail from './pages/SeriesDetail';
 import SearchResults from './pages/SearchResults';
 import ChapterDetail from './pages/ChapterDetail';
+import SearchByGenreResults from './pages/SearchByGenreResults';
+import MyBreadcrumb from './components/layout/Breadcrumb';
+
+import ComposePage from './pages/compose/ComposePage';
+import ChapterManager from './pages/compose/ChapterManager';
+import EditChapterDetail from './pages/compose/EditChapterDetail';
+import AddChapter from './pages/compose/AddChapter';
+import EditSeries from './pages/compose/EditSeries';
+import AddSeriesPage from './pages/compose/AddSeriesPage';
 
 function App() {
   // const [count, setCount] = useState(0)
@@ -44,6 +53,7 @@ function App() {
         currentUser={currentUser}
         logOut={logOut} 
       />
+      <MyBreadcrumb />
       <div>
         <Routes>
           <Route exact path="/login" element={<LoginPage currentUser={currentUser} />} />
@@ -57,7 +67,16 @@ function App() {
           <Route exact path={"/series/:slug"} element={<SeriesDetail />} />
           <Route exact path={`/series/:slug/:chapterNumber`} element={<ChapterDetail />} />
 
+          <Route exact path={`/genre/:genre`} element={<SearchByGenreResults />} />
           <Route exact path={`/search?keyword=:keyword`} element={<SearchResults />} />
+
+          <Route exact path={`/compose/all-chapter/:slug`} element={<ChapterManager />} />
+          <Route exact path={`/compose/edit-chapter/:slug/:chapterNumber`} element={<EditChapterDetail />} />
+          <Route exact path={`/compose/add-chapter/:slug`} element={<AddChapter />} />
+          <Route exact path={`/compose/add-series`} element={<AddSeriesPage />} />
+          <Route exact path={`/compose/edit-series/:slug`} element={<EditSeries />} />
+          <Route exact path="/compose" element={<ComposePage />} /> 
+
         </Routes>
       </div>
     </>

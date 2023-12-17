@@ -3,6 +3,13 @@ import CommentForm from "../form/CommentForm";
 import CommentList from "../list/CommentList";
 
 import CommentService from "../../services/comment.service";
+import PropTypes from "prop-types";
+
+CommentSection.propTypes = {
+    comments: PropTypes.array.isRequired,
+    chapterId: PropTypes.number.isRequired,
+};
+
 
 export default function CommentSection({ comments, chapterId }) {
     console.log(comments, chapterId);

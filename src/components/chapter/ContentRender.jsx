@@ -1,16 +1,14 @@
-import React, { useRef, useImperativeHandle } from 'react';
-// import './SeriesReader.css'; // Import CSS for styling
+import PropTypes from 'prop-types';
 
 
 
-const ContentRender = React.forwardRef(
-  ({ chapterContent, chapterNumber, chapterTitle, lineSpacing, marker, toggleMarker }, ref) => {
-    const chapterTitleRef = useRef(null);
-
-    useImperativeHandle(ref, () => ({
-      chapterTitleRef: chapterTitleRef.current,
-    }));
-
+export default function ContentRender({ chapterContent,  lineSpacing, marker, toggleMarker }) {
+  ContentRender.propTypes = {
+    chapterContent: PropTypes.string.isRequired,
+    lineSpacing: PropTypes.string.isRequired,
+    marker: PropTypes.object,
+    toggleMarker: PropTypes.func.isRequired,
+  };
     chapterContent = chapterContent.split('\n');
 
   
@@ -40,6 +38,3 @@ const ContentRender = React.forwardRef(
       </div>
     );
   }
-);
-
-export default ContentRender;

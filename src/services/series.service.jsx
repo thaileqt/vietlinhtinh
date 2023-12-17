@@ -12,7 +12,7 @@ const SeriesService = {
     countUserOwnedSeries: (username) => request_utils.handleGetRequest(API_URL+ "/count-user-owned-series/" + username),
 
     addSeries: (newSeries) => request_utils.handlePostRequest(API_URL + "/create", newSeries),
-    editSeries: (slug, newSeriesData) => request_utils.handlePostRequest(API_URL + "/update-by-slug/" + slug, newSeriesData),
+    editSeries: (slug, newSeriesData) => request_utils.handlePutRequest(API_URL + "/update-by-slug/" + slug, newSeriesData),
     deleteSeries: (id) => request_utils.handleDeleteRequest(API_URL + "/delete-by-id/" + id),
     
 }

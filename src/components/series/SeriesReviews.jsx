@@ -3,8 +3,15 @@ import { TextField, Button, Typography, Rating } from '@mui/material';
 import AuthService from '../../services/auth.service';
 import ReviewService from '../../services/review.service';
 import ReviewList from '../list/ReviewList';
+import { PropTypes } from 'prop-types';
+
+
 
 export default function SeriesReviews({ reviews, seriesId }) {
+  SeriesReviews.propTypes = {
+    reviews: PropTypes.array.isRequired,
+    seriesId: PropTypes.number.isRequired,
+  };
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [newReview, setNewReview] = useState({
     content: '',

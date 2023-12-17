@@ -1,8 +1,8 @@
 import axios from "axios";
 
 
-// const hostname = "http://localhost:8080";
-const hostname = "https://vietlinhtinh-api-production.up.railway.app";
+const hostname = "http://localhost:8080";
+// const hostname = "https://vietlinhtinh-api-production.up.railway.app";
 
 const getToken = () => {
     return JSON.parse(localStorage.getItem("token"));
@@ -45,7 +45,14 @@ const handlePostRequest = (url, data) => {
       })
     });
   }
-  
+  const handlePutRequest = (url, data) => {
+    return axios.put(url, data, header_config()).catch((err) => {
+      console.log(err);
+      return renewAccessToken().then(() => {
+        return axios.post(url, data, header_config());
+      })
+    });
+  }
 
 const handleDeleteRequest = (url) => {
     return axios.delete(url, header_config()).catch((err) => {
@@ -67,6 +74,7 @@ const request_utils = {
     header_config,
     handleGetRequest,
     handlePostRequest,
+    handlePutRequest,
     handleDeleteRequest,
 };
 

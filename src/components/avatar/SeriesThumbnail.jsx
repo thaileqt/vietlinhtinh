@@ -1,7 +1,17 @@
 import default_cover from "../../assets/default_cover.jpeg";
+import PropTypes from "prop-types";
+
 
 
 const SeriesThumbnail = ({ src, size, borderRadius, shadow, width, height }) => {
+  SeriesThumbnail.propTypes = {
+    src: PropTypes.string,
+    size: PropTypes.number,
+    borderRadius: PropTypes.number,
+    shadow: PropTypes.bool,
+    width: PropTypes.number,
+    height: PropTypes.number,
+  };
     // size is from 1 - 10
     
     const w = size ? 50*size : (width ? width : 100);

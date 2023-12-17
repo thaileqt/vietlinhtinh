@@ -3,29 +3,46 @@ import SeriesThumbnail from "../avatar/SeriesThumbnail";
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
 import { Box, Typography } from "@mui/material";
+import { PropTypes } from "prop-types";
 
+SeriesCarousel.propTypes = {
+  seriesList: PropTypes.array.isRequired,
+  heading: PropTypes.string.isRequired,
+};
 
 function SamplePrevArrow(props) {
-    const { className, style, onClick } = props;
-    return (
-      <div
-        className={className}
-        style={{ ...style, display: "block", background: "green" }}
-        onClick={onClick}
-      />
-    );
+  SamplePrevArrow.propTypes = {
+    className: PropTypes.string.isRequired,
+    style: PropTypes.object.isRequired,
+    onClick: PropTypes.func.isRequired,
   }
 
-  function SampleNextArrow(props) {
-    const { className, style, onClick } = props;
-    return (
-      <div
-        className={className}
-        style={{ ...style, display: "block", background: "red" }}
-        onClick={onClick}
-      />
-    );
+  const { className, style, onClick } = props;
+  return (
+    <div
+      className={className}
+      style={{ ...style, display: "block", background: "green" }}
+      onClick={onClick}
+    />
+  );
+}
+
+function SampleNextArrow(props) {
+  SampleNextArrow.propTypes = {
+    className: PropTypes.string.isRequired,
+    style: PropTypes.object.isRequired,
+    onClick: PropTypes.func.isRequired,
   }
+  const { className, style, onClick } = props;
+  return (
+    <div
+      className={className}
+      style={{ ...style, display: "block", background: "red" }}
+      onClick={onClick}
+    />
+  );
+}
+
 
 export default function SeriesCarousel ({ seriesList, heading }) {
   const settings = {
@@ -65,5 +82,4 @@ export default function SeriesCarousel ({ seriesList, heading }) {
       </div>
     </div>
   );
-};
-
+}
