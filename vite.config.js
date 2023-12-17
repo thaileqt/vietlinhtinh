@@ -19,7 +19,11 @@ export default defineConfig({
   //     },
   //   },
   // },
-  plugins: [react()], 
+  plugins: [react(
+    {
+      include: [/\.jsx$/, /\.tsx$/]
+    }
+  )], 
   build: { chunkSizeWarningLimit: 1000}
 })
 
