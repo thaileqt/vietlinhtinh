@@ -1,9 +1,10 @@
 import default_cover from "../../assets/default_cover.jpeg";
 import PropTypes from "prop-types";
+import "./SeriesThumbnail.css";
 
 
 
-const SeriesThumbnail = ({ src, size, borderRadius, shadow, width, height }) => {
+const SeriesThumbnail = ({ src, size, borderRadius, shadow, onHover=false }) => {
   SeriesThumbnail.propTypes = {
     src: PropTypes.string,
     size: PropTypes.number,
@@ -11,17 +12,19 @@ const SeriesThumbnail = ({ src, size, borderRadius, shadow, width, height }) => 
     shadow: PropTypes.bool,
     width: PropTypes.number,
     height: PropTypes.number,
+    onHover: PropTypes.bool,
   };
     // size is from 1 - 10
+
     
-    const w = size ? 50*size : (width ? width : 100);
-    const h = size ? w * 1.5 : (height ? height : 150);
+    const w = 100 * size
+    const h = 142 * size
 
     return (
              <img
               src={src ? src : default_cover}
               alt="Cover"
-              className="img-fluid"
+              className={ onHover===true ? "img-fluid img-hover" : "img-fluid"}
               style={{
                 width:  `${w}px`,
                 height: `${h}px`,
@@ -29,6 +32,7 @@ const SeriesThumbnail = ({ src, size, borderRadius, shadow, width, height }) => 
                 borderRadius: borderRadius ? `${borderRadius}px` : "0px",
                 boxShadow: shadow ? "0px 0px 10px 0px rgba(0, 0, 0, 0.9)" : "none",
               }}
+            
             />
         );  
     }

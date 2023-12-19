@@ -17,10 +17,8 @@ const UserOwnedSeriesList = ({ series }) => {
       {series.map((series, index) => (
         <React.Fragment key={series.id}>
           {index === 0 && <Divider />}
-          <ListItem>
               <UserOwnedSeries series={series} />
-            </ListItem>
-          
+          <hr />
           {/* <Box sx={{ position: 'relative' }}>
             <ListItem>
               <UserOwnedSeriesElement series={series} />

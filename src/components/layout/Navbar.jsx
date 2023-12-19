@@ -1,126 +1,232 @@
-import { React, useEffect, useState } from 'react';
-import { Navbar, Nav, NavDropdown, Container, Button, Form, Col } from 'react-bootstrap';
-import UserService from '../../services/user.service';
-import "bootstrap/dist/css/bootstrap.min.css";
-import utils from '../../commons/utils'; 
-import "../../App.css";
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { IconButton, Avatar, Stack } from '@mui/material';
+import { Search } from '@mui/icons-material';
+import ArrowDropDownOutlinedIcon from '@mui/icons-material/ArrowDropDownOutlined';
+import { InputGroup, Nav, NavDropdown, Container, Navbar, Form } from 'react-bootstrap';
 
-const MyNavbar = ({ currentUser, logOut }) => {
+import UserService from '../../services/user.service';
+import TransparentButton from '../button/TransparentButton';
+import Notification from '../misc/Notification';
+
+import utils from '../../commons/utils';
+import paths from '../../commons/paths';
+import "../../App.css";
+import "./Navbar.css";
+import PropType from 'prop-types';
+import LoginForm from '../form/LoginForm';
+import RegistrationForm from '../form/RegistrationForm';
+
+
+
+export default function MyNavbar ({ currentUser, logOut }) {
   const [genres, setGenres] = useState([]);
   const [searchKeyword, setSearchKeyword] = useState("");
-  const navigate = useNavigate();
+  const [showSearch, setShowSearch] = useState(false);
 
+  const [showLoginForm, setShowLoginForm] = useState(false);
+  const loginFormRef = useRef(null);
+
+  const [showRegistrationForm, setShowRegistrationForm] = useState(false);
+  const registrationFormRef = useRef(null);
+
+  const [clicking, setClicking] = useState(null);
+
+  const handleLoginClick = () => {
+    setShowLoginForm(true);
+    setClicking("login")
+  };
+
+  const handleRegisterClick = () => {
+    setShowRegistrationForm(true);
+    setClicking("register")
+  };
+
+  const handleClickOutside = (event) => {
+    if (loginFormRef.current && !loginFormRef.current.contains(event.target)) {
+      setShowLoginForm(false);
+      return
+    }
+    if (registrationFormRef.current && !registrationFormRef.current.contains(event.target)) {
+      setShowRegistrationForm(false);
+      return
+    }
+  };
   
+  const [notificationAnchorEl, setNotificationAnchorEl] = useState(null);
+  const navigate = useNavigate();
 
 
   useEffect(() => {
     UserService.getGenres()
-        .then((response) => {
-            setGenres(response.data);
-        })
-        .catch((error) => {
-            console.error('Error fetching series details:', error);
-        });
-}, []);
+      .then((response) => {
+        setGenres(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching series details:', error);
+      });
+      
+    if (showLoginForm || showRegistrationForm) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+      setClicking(null);
+    }
+   
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      
+    };
+  }, [showLoginForm, showRegistrationForm]);
 
-// get form input
-const handleInputChange = (e) => {
-  setSearchKeyword(e.target.value);
-}
-
-const handleSearch = () => {
-  console.log(searchKeyword);
-  if (searchKeyword === "") {
-    alert("Vui lòng nhập từ khoá tìm kiếm");
-    return;
+  const handleInputChange = (e) => {
+    setSearchKeyword(e.target.value);
   }
-  
-  navigate(`/search?keyword=${searchKeyword}`);
-  window.location.reload();
-}
+
+  const handleSearch = () => {
+    if (searchKeyword === "") {
+      alert("Vui lòng nhập từ khoá tìm kiếm");
+      return;
+    }
+    navigate(`/search?keyword=${searchKeyword}`);
+    window.location.reload();
+  }
+
+  const handleMenuOpen = (event, menuType) => {
+    if (menuType === 'notification') {
+      setNotificationAnchorEl(event.currentTarget);
+    }
+  };
+
+  const handleMenuClose = (menuType) => {
+    if (menuType === 'notification') {
+      setNotificationAnchorEl(null);
+    }
+  };
 
   
+
 
   return (
     <>
-    <Navbar expand="lg" className="bg-body-tertiary">
-      <Container fluid>
-       
-        <Col>
-          <Navbar.Toggle aria-controls="navbarScroll" />
-          <Navbar.Collapse id="navbarScroll">
-            <Col>
-            <Form className="d-flex ">
-              <Form.Control
-                type="search"
-                placeholder="Search"
-                className="me-2"
-                aria-label="Search"
-                onChange={handleInputChange}
-              />
-              <Button variant="outline-success " 
-                      className='me-auto my-2 my-lg-0'
-                      onClick={handleSearch}
-                >Search
-              </Button>
-              
-              
-            </Form>
-            </Col>
-            <Col className='justify-content-end'>
-            <Nav className="me-auto my-2 my-lg-0 " style={{ maxHeight: '100px' }} navbarScroll>
-            <Nav.Link href="/compose">Viết</Nav.Link>
-              {/* Dropdown Menu */}
-              <NavDropdown title="Thể loại" id="navbarScrollingDropdown">
-              {genres.map((genre, index) => (
-                  <NavDropdown.Item key={index} href={`/genre/${genre.name.toLowerCase()}`}>{utils.genre_name_mapper[genre.name]}</NavDropdown.Item>
+    <Navbar className="navbar-header">
+      <Container>
+        <Navbar.Brand href={paths.home} className="navbar-brand" 
+            style={{
+              color: "rgb(233, 233, 233)",
+              // move down
+              position: "relative",
+              top: "5px",
+              padding: "0px",
+
+              fontSize: "30px",
+            }}>
+              VietLinhTinh
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          
+            <NavDropdown title="Genres" id="basic-nav-dropdown" className="navbar-dropdown">
+                {genres.map((genre, index) => (
+                  <NavDropdown.Item key={index} href={`/genre/${genre.name.toLowerCase()}`} className="navbar-dropdown-item">
+                    {utils.genre_name_mapper[genre.name]}
+                  </NavDropdown.Item>
                 ))}
-                {/* <NavDropdown.Divider /> */}
-              </NavDropdown>
-              {/* End dropdown menu */}
-              
-            </Nav>
-            </Col>
-          </Navbar.Collapse>
-        </Col>
-        <Col md="auto">
-          <Navbar.Brand className="mx-auto" href="/">VietLinhTinh.vn</Navbar.Brand>
-        </Col>
-        
-        <Col>
-        <Navbar.Collapse id="navbarScroll" className="justify-content-end">
-          <Nav className="me-auto my-2 my-lg-0" style={{ maxHeight: '100px' }} navbarScroll>
-          {currentUser ?  (
-            <>
-            
-            <NavDropdown title={currentUser.name} id="navbarScrollingDropdown">
-              <NavDropdown.Item key={1} href={`/profile/${currentUser.username}`}>Trang cá nhân</NavDropdown.Item>
-
-              <NavDropdown.Divider />
-              <NavDropdown.Item key={"logout"} href={`/login`} onClick={logOut}>Đăng xuất</NavDropdown.Item>
             </NavDropdown>
+         
+
+            <Nav.Link href="#">
+              <InputGroup>
+                <IconButton onClick={() => setShowSearch(!showSearch)} style={{color: "rgb(233, 233, 233"}}>
+                  <Search />
+                </IconButton>
+                {showSearch && (
+                  <Form className="d-flex">
+                    <Form.Control
+                      type="search"
+                      placeholder="Search"
+                      aria-label="Search"
+                      onChange={handleInputChange}
+                    />
+                    <IconButton useSubmit={handleSearch}>
+                      <Search />
+                    </IconButton>
+                  </Form>
+                )}
             
-            </>
-            
-          ) : (
-            <>
-            <Nav.Link href="/register">Register</Nav.Link>
-            <Nav.Link href="/login">Login</Nav.Link>
-            </>
-          )}
-          </Nav>
-          </Navbar.Collapse>
-        </Col>
+              </InputGroup>
+            </Nav.Link>
+
+
+        
+       
+        </Navbar.Collapse>
+       
+             
+
+          <Navbar.Collapse className="justify-content-end">
+            {currentUser ? (
+              <Stack direction="row" spacing={1}
+                sx={{
+                  alignItems: 'center',
+                  '& > :not(style)': { m: 1 },
+                }}
+              >
+                
+                <Avatar
+                  sx={{ width: 24, height: 24}}
+                  alt="Remy Sharp"
+                  src={currentUser.cover ? currentUser.cover : "/static/images/avatar/1.jpg"}
+                />
+                <NavDropdown title={currentUser.username} className="navbar-dropdown">
+                  <NavDropdown.Item href={paths.profile(currentUser.username)} className="navbar-dropdown-item">Trang cá nhân</NavDropdown.Item>
+                  <NavDropdown.Item className="navbar-dropdown-item">Account Settings</NavDropdown.Item>
+                  <NavDropdown.Item className="navbar-dropdown-item">Reading List</NavDropdown.Item>
+                  <NavDropdown.Item onClick={logOut} className="navbar-dropdown-item">Đăng xuất</NavDropdown.Item>
+                </NavDropdown>
+
+                <Notification 
+                  notificationAnchorEl={notificationAnchorEl} 
+                  handleMenuClose={handleMenuClose} 
+                  handleMenuOpen={handleMenuOpen}/>
+
+                <TransparentButton name="Create" color="rgb(233, 233, 233)" onClick={() => navigate(paths.compose.composePage())}/>
+                
+              </Stack>
+            ) : (
+                <>
+                    <Stack direction="row" sx={{ alignItems: 'center', '& > :not(style)': { m: 1 } }}>
+                      <Nav.Link onClick={handleLoginClick} style={{ color: "rgb(233, 233, 233)", position: 'relative' }}>
+                        Login
+                        {clicking === "login" && <ArrowDropDownOutlinedIcon style={{ color: "rgb(233, 233, 233)", position: 'absolute', bottom: '-20px', left: '50%', transform: 'translateX(-50%)', cursor: 'pointer' }} onClick={handleLoginClick} />}
+                      </Nav.Link>
+                    </Stack >
+                    
+                    <Stack direction="row" sx={{ alignItems: 'center', '& > :not(style)': { m: 1 } }}>
+                      <Nav.Link onClick={handleRegisterClick} style={{ color: "rgb(233, 233, 233)", position: 'relative' }}>
+                        Register
+                        {clicking === "register" && <ArrowDropDownOutlinedIcon style={{ color: "rgb(233, 233, 233)", position: 'absolute', bottom: '-20px', left: '50%', transform: 'translateX(-50%)', cursor: 'pointer' }} onClick={handleRegisterClick} />}
+                      </Nav.Link>
+                    </Stack >
+                    
+                </>
+            )}
+        
+        </Navbar.Collapse>
       </Container>
-
-      
-
+      {showLoginForm && (
+          <LoginForm setShowLoginForm={setShowLoginForm} loginFormRef={loginFormRef} />
+      )}
+      {showRegistrationForm && (
+          <RegistrationForm setShowRegistrationForm={setShowRegistrationForm} registrationFormRef={registrationFormRef} />
+      )}
     </Navbar>
     </>
-
   );
-};
+}
 
-export default MyNavbar;
+MyNavbar.propTypes = {
+  currentUser: PropType.object,
+  logOut: PropType.func.isRequired,
+};

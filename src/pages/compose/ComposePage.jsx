@@ -90,7 +90,7 @@ const ComposePage = () => {
         <AddSeriesButton />
       </div>
       <div className="container jumbotron">
-        <h6>Truyện của bạn</h6>
+        <h4>Truyện của bạn</h4>
           { series ? (
             <UserOwnedSeriesList series={series} />
           ) : (

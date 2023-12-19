@@ -61,11 +61,12 @@ const Home = () => {
 
   return (
     <div className="container" >
+      
       <div>
-        <SeriesCarousel seriesList={hotSeries} heading={"Truyện Hot"} />
+        <SeriesCarousel seriesList={hotSeries} heading={"Truyện Hot"} indexMark={true} showRating={true}/>
       </div>
 
-      <div className="container">
+      <div>
         <RecentUpdatedSeries />
       </div>
       

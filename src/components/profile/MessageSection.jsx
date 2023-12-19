@@ -6,11 +6,13 @@ import {
   Button,
   Grid,
   IconButton,
+  Stack,
 } from "@mui/material";
 import defaultAvatar from "../../assets/default_avatar.jpg";
 import utils from "../../commons/utils";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import UserService from "../../services/user.service";
+import Role from "../misc/Role";
 
 const MessageSection = ({ messages, profile_username }) => {
   const [replyingTo, setReplyingTo] = useState(null);
@@ -34,30 +36,45 @@ const MessageSection = ({ messages, profile_username }) => {
   };
 
   const renderReplyMessages = (replyMessages) => (
-    <div className="reply-messages">
-      {replyMessages.map((reply, replyIndex) => (
-        <div className="reply-message" key={replyIndex} style={{ marginLeft: "20px" }}>
-          <div className="reply-header" style={{ display: "flex", alignItems: "center", marginBottom: "5px" }}>
+    <div className="reply-messages" style={{paddingTop: "15px"}}>
+      {replyMessages.map((message, index) => (
+        <Stack key={index} direction="column" style={{ marginBottom: "10px" }}>
+        
+          <Stack direction="row" spacing={2} >
+            {/* Avatar */}
             <Avatar
-              className="reply-avatar"
-              src={reply.sender.avatar || defaultAvatar}
-              alt={reply.sender.username}
+              src={message.sender.avatar || defaultAvatar}
+              alt={message.sender.username}
+              style={{ border: "1px solid #ccc", width: "50px", height: "50px" }}
             />
-            <div style={{ marginLeft: "10px" }}>
-              <Typography variant="subtitle1" component="h6">
-                {reply.sender.username} - {utils.timeSince(reply.createdAt)}
-              </Typography>
-              <Typography variant="subtitle2" component="p">
-                {reply.role}
-              </Typography>
+            <Stack direction="column" width="100%">
+            {/* Information */}
+            <div style={{ border: "1px solid #ccc", borderRadius: "5px", padding: "10px", flex: 1 }}>
+              <Stack direction="column" width="100%">
+                {/* Title, Role, Time */}
+                <Stack direction="row" width="100%" alignItems="center" justifyContent="space-between" mb={1}>
+                  <Typography variant="subtitle1" component="h6">
+                    {message.sender.username} {message.sender.roles.map((role, index) => (
+                      <Role name={role.name} key={index} />
+                    ))}
+                  </Typography>
+                  <Typography variant="subtitle2" component="p">
+                    {utils.timeSince(message.createdAt)}
+                  </Typography>
+                </Stack>
+                {/* Content */}
+                <Typography variant="body1" component="p">
+                  {message.content}
+                </Typography>
+              </Stack>
             </div>
-          </div>
-          <div className="reply-content">
-            <Typography variant="body2" component="p">
-              {reply.content}
-            </Typography>
-          </div>
-        </div>
+            </Stack>
+            {/* Reply */}
+            
+          </Stack>
+        
+        
+      </Stack>
       ))}
     </div>
   );
@@ -98,54 +115,50 @@ const MessageSection = ({ messages, profile_username }) => {
           </Button>
         </Grid>
       </Grid>
-
+      <hr />
       <div className="tab-messages">
         {messages &&
           messages.map((message, index) => (
-            <div className="message-container" key={index}>
-              <div className="message-and-replies" style={{ border: "1px solid #ccc", padding: "10px", marginBottom: "10px" }}>
-                <div className="message" style={{ marginBottom: "10px" }}>
-                  <div className="message-row1" style={{ display: "flex", marginBottom: "5px" }}>
-                    <div className="message-avatar">
-                      <Avatar
-                        src={message.sender.avatar || defaultAvatar}
-                        alt={message.sender.username}
-                      />
-                    </div>
-                    <div style={{ marginLeft: "10px" }}>
-                      <Typography variant="subtitle1" component="h6">
-                        {message.sender.username} - {message.sender.roles.map((role, index) => (
-                          <span key={index}>{role.name}</span>
-                        ))}
+        
+            <Stack key={index} direction="column">
+              {/* <div style={{ border: "1px solid #ccc", padding: "10px", borderRadius: "5px" }}> */}
+                <Stack direction="row" spacing={2} padding="15px">
+                  {/* Avatar */}
+                  <Avatar
+                    src={message.sender.avatar || defaultAvatar}
+                    alt={message.sender.username}
+                    style={{ border: "1px solid #ccc", width: "50px", height: "50px" }}
+                  />
+                  <Stack direction="column" width="100%">
+                  {/* Information */}
+                  <div style={{ border: "1px solid #ccc", borderRadius: "5px", padding: "10px", flex: 1 }}>
+                    <Stack direction="column" width="100%">
+                      {/* Title, Role, Time */}
+                      <Stack direction="row" width="100%" alignItems="center" justifyContent="space-between" mb={1}>
+                        <Typography variant="subtitle1" component="h6">
+                          {message.sender.username} {message.sender.roles.map((role, index) => (
+                            <Role name={role.name} key={index} />
+                          ))}
+                        </Typography>
+                        <Typography variant="subtitle2" component="p">
+                          {utils.timeSince(message.createdAt)}
+                        </Typography>
+                      </Stack>
+                      {/* Content */}
+                      <Typography variant="body1" component="p">
+                        {message.content}
                       </Typography>
-                      <Typography variant="subtitle2" component="p">
-                        {utils.timeSince(message.createdAt)}
-                      </Typography>
-                    </div>
-                    <div>
-                      <IconButton edge="end" aria-label="reply" onClick={() => handleReplyClick(message.id)}>
-                        <ArrowForwardIcon />
-                      </IconButton>
-                    </div>
+                    </Stack>
                   </div>
-                  <div className="message-row2">
-                    <Typography variant="body1" component="p">
-                      {message.content}
-                    </Typography>
-                  </div>
-                </div>
-                {replyingTo === message.id && (
-                  <div className="reply-form" style={{ marginTop: "10px" }}>
-                    {/* Add your reply form here */}
-                    <TextField fullWidth id="replyContent" placeholder="Your reply..." variant="outlined" multiline rows={2} />
-                    <Button variant="contained" color="primary" onClick={handleReplySubmit}>
-                      Send
-                    </Button>
-                  </div>
-                )}
-                {message.replyMessages && renderReplyMessages(message.replyMessages)}
-              </div>
-            </div>
+                  <span>Reply</span>
+                  {message.replyMessages && renderReplyMessages(message.replyMessages)}
+                  </Stack>
+                  {/* Reply */}
+                  
+                </Stack>
+              {/* </div> */}
+              
+            </Stack>
           ))}
       </div>
     </section>

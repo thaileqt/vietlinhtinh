@@ -41,6 +41,11 @@ const genre_name_mapper = {
     "LITRPG": "LitRPG",
 };
 
+function formatDate(createdAt) {
+    const options = { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+    return new Date(createdAt).toLocaleDateString(undefined, options);
+}
+
 function timeSince(date) {
     const seconds = Math.floor((new Date() - new Date(date)) / 1000);
     
@@ -77,6 +82,7 @@ function timeSince(date) {
 const utils = {
     genre_name_mapper,
     timeSince,
+    formatDate,
 };
 
 export default utils;

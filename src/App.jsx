@@ -13,6 +13,7 @@ import SearchResults from './pages/SearchResults';
 import ChapterDetail from './pages/ChapterDetail';
 import SearchByGenreResults from './pages/SearchByGenreResults';
 import MyBreadcrumb from './components/layout/Breadcrumb';
+import Footer from './components/layout/Footer';
 
 import ComposePage from './pages/compose/ComposePage';
 import ChapterManager from './pages/compose/ChapterManager';
@@ -20,6 +21,7 @@ import EditChapterDetail from './pages/compose/EditChapterDetail';
 import AddChapter from './pages/compose/AddChapter';
 import EditSeries from './pages/compose/EditSeries';
 import AddSeriesPage from './pages/compose/AddSeriesPage';
+
 
 function App() {
   // const [count, setCount] = useState(0)
@@ -45,6 +47,7 @@ function App() {
   const logOut = () => {
     AuthService.logout();
     setCurrentUser(currentUser);
+    window.location.reload();
   };
 
   return (
@@ -54,6 +57,7 @@ function App() {
         logOut={logOut} 
       />
       <MyBreadcrumb />
+
       <div>
         <Routes>
           <Route exact path="/login" element={<LoginPage currentUser={currentUser} />} />
@@ -79,6 +83,8 @@ function App() {
 
         </Routes>
       </div>
+
+      <Footer />
     </>
   )
 }

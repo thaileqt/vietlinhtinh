@@ -4,61 +4,53 @@ import utils from '../../commons/utils';
 
 
 
-const Genre = ({ 
+const Role = ({ 
   name, 
   size, 
-  color, 
-  backgroundColor="rgb(212, 212, 212)", 
-  border='1px solid rgb(237, 237, 237)', 
   borderRadius="3px" ,
   margin='0px 10px 3px 0px',
-  padding='2px 4px',
+  padding='2px 5px',
 }) => {
-  Genre.propTypes = {
+  Role.propTypes = {
     name: PropTypes.string.isRequired,
     size: PropTypes.string,
-    color: PropTypes.string,
-    backgroundColor: PropTypes.string,
     borderRadius: PropTypes.string,
-    border: PropTypes.string,
     margin: PropTypes.string,
     padding: PropTypes.string,
   };
   // You can define different background colors based on genre if needed
   const getBackgroundColor = (genreName) => {
     switch (genreName) {
-      case 'ACTION':
-        return '#ff9999';
-      case 'ADVENTURE':
-        return '#99ff99';
+      case 'ROLE_ADMIN':
+        return 'rgb(100, 0, 50)';
       // Add more cases for different genres if required
       default:
         // default super dark 
-        return '#333333';
+        return 'blue';
     }
   };
 
-  const genreStyle = {
-    border: border,
+  const roleStyle = {
     padding: padding,
     margin: margin,
     borderRadius: borderRadius,
-    // backgroundColor: getBackgroundColor(name.toUpperCase()), // Set background color based on genre name
-    backgroundColor: backgroundColor ? backgroundColor : getBackgroundColor(name ? name.toUpperCase() : "Unknown"),
-    color: color ? color : 'white',
+    backgroundColor: getBackgroundColor(name ? name.toUpperCase() : "Unknown"),
+    color: "white",
     // fit the content
     display: 'inline-block',
     // if size exist then set the font size to size, otherwise set it to 0.6rem
     fontSize: size ? size : '0.7rem',
+    
+    
   };
+  // take only words after "_"
+const roleName = name ? name.split("_")[1] : "Unknown";
 
   return (
-      <span style={genreStyle}>{utils.genre_name_mapper[name]}</span>
+      <span style={roleStyle}>{roleName}</span>
   );
 };
 
-Genre.propTypes = {
-  name: PropTypes.string.isRequired,
-};
 
-export default Genre;
+
+export default Role;

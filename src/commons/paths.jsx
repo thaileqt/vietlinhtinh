@@ -40,6 +40,9 @@ const paths = {
 
         editSeries(slug) {
             return `/compose/edit-series/${slug}`;
+        },
+        composePage() {
+            return `/compose`;
         }
     },
 };

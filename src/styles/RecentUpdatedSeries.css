@@ -5,7 +5,7 @@
     border-style: solid;
     border-width: 1px;
     border-radius: 5px;
-    margin-top: 20px;
+    margin-top: 40px;
   }
   
   .section-header {
@@ -20,7 +20,7 @@
   }
   
   .list-item {
-    cursor: pointer;
+    /* cursor: pointer; */
     transition: background-color 0.3s ease;
   }
   

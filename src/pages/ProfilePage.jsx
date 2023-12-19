@@ -64,8 +64,10 @@ const Profile = () => {
 
           {/* Right Column: Profile Tabs */}
           <Grid item xs={12} md={8}>
-            <ProfileTabs value={tabValue} handleChange={handleTabChange} />
-            {renderTabContent()}
+            <ProfileTabs value={tabValue} handleChange={handleTabChange} renderTabContent={renderTabContent} />
+            {/* {renderTabContent()} */}
+            
+            
 {/*             
             <MessageSection messages={messages} profile_username={profile_username} />
             <SeriesSection /> */}

@@ -1,6 +1,7 @@
-import { List, Avatar, ListItem, ListItemText, Divider } from "@mui/material"
-import default_avatar from "../../assets/default_avatar.jpg";
+import { List } from "@mui/material"
+import Comment from "../form/Comment";
 import { PropTypes } from "prop-types";
+
 
 
 export default function CommentList({comments}) {
@@ -8,21 +9,14 @@ export default function CommentList({comments}) {
     comments: PropTypes.array.isRequired
   }
   return (
-    <>
+    <div>
     {comments ? (
         <List>
         {comments.map((comment) => (
-          <div key={comment.id}>
-            <ListItem>
-                <Avatar alt={comment.userDTO.username} src={comment.userDTO.cover ? comment.userDTO.cover : default_avatar} />
-                <ListItemText primary={comment.userDTO.username} />
-                <ListItemText primary={comment.content} />
-            </ListItem>
-            <Divider />
-          </div>
+          <Comment key={comment.id} data={comment} />
         ))}
       </List>
     ) : (<></>)}
-    </>
+    </div>
   )
 }

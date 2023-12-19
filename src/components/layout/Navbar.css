@@ -1,0 +1,33 @@
+
+.navbar-header {
+    background-color: rgb(100, 0, 50);
+  }
+
+.navbar-brand {
+    color: rgb(233, 233, 233);;
+    font-size: 25px;
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
+}
+
+
+.navbar-dropdown {
+    /* background-color: rgb(100, 0, 50); */
+    padding: 0 10px;
+    color: rgb(233, 233, 233);
+    /* // display from bottom  */
+    /* position: relative;
+    top: 5px; */
+    
+}
+.navbar-dropdown-item {
+    /* color: rgb(233, 233, 233); */
+    color: rgb(100, 0, 50);
+    font-size: 15px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.navbar-dropdown-item:hover {
+    background-color: rgb(100, 0, 50);
+    color: rgb(233, 233, 233);
+}

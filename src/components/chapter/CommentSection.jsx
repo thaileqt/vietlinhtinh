@@ -4,16 +4,20 @@ import CommentList from "../list/CommentList";
 
 import CommentService from "../../services/comment.service";
 import PropTypes from "prop-types";
+import AuthService from "../../services/auth.service";
 
 CommentSection.propTypes = {
     comments: PropTypes.array.isRequired,
-    chapterId: PropTypes.number.isRequired,
+    chapterId: PropTypes.string.isRequired,
 };
 
 
 export default function CommentSection({ comments, chapterId }) {
     console.log(comments, chapterId);
     const [commentText, setCommentText] = useState("");
+
+    // check if user logged in
+    const currentUser = AuthService.getCurrentUser();
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -24,7 +28,9 @@ export default function CommentSection({ comments, chapterId }) {
             chapterId: chapterId,
         })
         .then((response) => {
-            console.log(response.data);
+            // append to head of comments array
+            comments.unshift(response.data);
+            setCommentText("");
         })
         .catch((error) => {
             console.error('Error creating comment:', error);
@@ -34,15 +40,26 @@ export default function CommentSection({ comments, chapterId }) {
   
     
     return (
-        <div>
+        <div className="container" style={{
+            marginTop: "20px",
+            marginBottom: "20px",
+            border: "1px solid #ccc",
+            padding: "20px",
+        }}>
             
-        <h2>Comments</h2>
-        <CommentList comments={comments} />
-        <CommentForm
-            commentText={commentText}
-            setCommentText={setCommentText}
-            handleSubmit={handleSubmit}
-        />
+            <h2>Comments</h2>
+            {currentUser ? (
+                <CommentForm
+                commentText={commentText}
+                setCommentText={setCommentText}
+                handleSubmit={handleSubmit}
+            />
+            ) : (
+                <p>Log in to comment</p>
+            )}
+            
+            
+            <CommentList comments={comments} />
         
         </div>
     );

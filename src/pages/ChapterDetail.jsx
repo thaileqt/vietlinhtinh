@@ -18,6 +18,7 @@ import paths from '../commons/paths';
 
 
 
+
 const ChapterDetail = () => {
     const user = AuthService.getCurrentUser();
     let { slug, chapterNumber } = useParams(); // Get the ID parameter from the URL
@@ -267,8 +268,14 @@ const ChapterDetail = () => {
         </div>
 
 
-
-        <CommentSection chapterId={chapter.id} comments={chapter.comments}/>
+        <div className="container" style={{ display: 'flex', flexDirection: 'row' }}>
+        {/* Comment Section */}
+        <div style={{ flex: 1 }}>
+          <CommentSection chapterId={chapter.id} comments={chapter.comments} />
+        </div>
+        {/* Similar Series */}
+    
+      </div>
   
       </div>
         ) : (

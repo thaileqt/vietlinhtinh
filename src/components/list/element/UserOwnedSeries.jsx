@@ -1,4 +1,4 @@
-import { Grid, ListItem, Typography } from "@mui/material";
+import { Divider, Grid, ListItem, Rating, Stack, Typography } from "@mui/material";
 import SeriesThumbnail from "../../avatar/SeriesThumbnail";
 import { Link } from "react-router-dom";
 import Genre from "../../misc/Genre";
@@ -20,53 +20,49 @@ const renderDescription = (description) => {
 
 export default function UserOwnedSeries({ series }) {
   return (
-    <ListItem>
-      {/* Row 1 */}
-      <Grid container justifyContent="space-between" xs={12}>
+    <Stack direction="column">
         <Grid container spacing={2} xs={12}>
-            {/* Left Column */}
-            <Grid item xs={12} sm={3}>
-                <Grid container alignItems="center" spacing={2}>
-                    {/* Thumbnail */}
-                    <Grid item>
-                    <SeriesThumbnail src={series.cover} borderRadius={3} width={100} height={140} />
-                    </Grid>
-                    {/* Star Rating (Assuming you have a component for it) */}
-                    <Grid item>
-                    {/* Replace with your star rating component */}
-                    {/* <StarRatingComponent /> */}
-                    </Grid>
-                </Grid>
-            </Grid>
 
-            {/* Right Column */}
-            <Grid item xs={12} sm={9}>
-                <Link to={paths.compose.allChapter(series.slug)}>
-                <Typography variant="subtitle1">{series.title}</Typography>
-                </Link>
-                <Typography variant="body2" color="textSecondary">
-                <VisibilityOutlined fontSize="small"/> {series.totalView} <FavoriteOutlined fontSize="small" />{series.totalLike} <LibraryBooksOutlined/> {series.totalChapter}
-                </Typography>
-                <Typography variant="body2" color="textSecondary">
-                {series.genres && series.genres.map((element) => (
-                    <span key={element ? element : "z"}>
-                    <Genre name={element ? element : "Unknown"} />
-                    </span>
-                ))}
-                </Typography>
-                <Typography variant="body2" color="textSecondary">
-                {renderDescription(series.description)}
-                </Typography>
-            </Grid>
+              <Stack direction="row">
+                  
+                  <Stack direction="column" spacing={0.3} alignItems="center">
+                    {/* Thumbnail */}
+                    <SeriesThumbnail src={series.cover} borderRadius={3} size={0.9} />
+                    {/* Rating */}
+                    <Rating name="read-only" value={3.5} readOnly />
+                  </Stack>
+                  
+
+                  <Stack direction="column">
+                    <Typography variant="subtitle1">{series.title}</Typography>
+                    {/* View, Like, Chapter  */}
+                    <Typography variant="body2" color="textSecondary">
+                      <VisibilityOutlined fontSize="small"/> {series.totalView} <FavoriteOutlined fontSize="small" />{series.totalLike} <LibraryBooksOutlined/> {series.totalChapter}
+                    </Typography>
+                    {/* Genre  */}
+                    <Typography variant="body2" color="textSecondary">
+                      {series.genres && series.genres.map((element) => (
+                          <span key={element ? element : "z"}>
+                          <Genre name={element ? element : "Unknown"} />
+                          </span>
+                      ))}
+                      </Typography>
+                      {/* Description  */}
+                      <Typography variant="body2" color="textSecondary">
+                        {renderDescription(series.description)} 
+                      </Typography>
+                  </Stack>
+              </Stack>
+
         </Grid>
         {/* Row 2 for buttons */}
         <Grid container justifyContent="flex-end" xs={12}>
           <CustomButton name="Chương" icon={<AddOutlined />} color="transparent" onClick={() => window.location.href = paths.compose.addChapter(series.slug)} />
           <CustomButton name="Sửa" icon={<EditOutlined />} color="transparent" onClick={() => window.location.href = paths.compose.editSeries(series.slug)} />
         </Grid>
-      </Grid>
-
-    </ListItem>
+        
+    </Stack>
+    
     
   );
 }

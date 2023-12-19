@@ -1,6 +1,6 @@
 // SeriesInformation.js
 import { Link } from "react-router-dom";
-import { Typography, Grid } from "@mui/material";
+import { Typography, Grid, ListItemAvatar } from "@mui/material";
 import GenreIcon from '@mui/icons-material/Category';
 import ChapterIcon from '@mui/icons-material/LibraryBooks';
 import StatusIcon from '@mui/icons-material/Info';
@@ -9,6 +9,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import SeriesThumbnail from "../avatar/SeriesThumbnail";
 import Genre from "../misc/Genre";
 import { PropTypes } from "prop-types";
+import { Favorite, FavoriteBorder, FavoriteSharp } from "@mui/icons-material";
 
 
 
@@ -19,55 +20,55 @@ export default function SeriesInformation({ series }) {
   return (
     <div className="row">
       {series && (
-        <>
-          <div className="col-md-4 mb-3">
-            <SeriesThumbnail src={series.cover} size={4} shadow={true} />
-          </div>
-          <div className="col-md-8">
-            {/* Title and Information */}
-            <div>
-              <Typography variant="h4">{series.title}</Typography>
-              {/* Add separator */}
-              <hr className="separator" />
+        <Grid container alignItems="flex-start">
+          <ListItemAvatar sx={{marginRight: "20px"}}>
+            <SeriesThumbnail src={series.cover} size={2} shadow={true} />
+          </ListItemAvatar>
+
+            <Grid>
+              <p><Typography variant="h4">{series.title}</Typography></p>
               <p>
-                <strong><GenreIcon /> Thể loại:</strong>
                 {series.genres.map((element) => (
                   <Link to="#" key={element}>
                     {" "}
-                    <Genre name={element} />
+                    <Genre name={element} color="white" backgroundColor="rgb(62, 82, 122)" />
                   </Link>
                 ))}
               </p>
               <Grid container spacing={3} alignItems="center">
                 <Grid item>
-                  <FavoriteIcon />
+                  <VisibilityIcon fontSize="small" />
                   <Typography variant="body1" component="span" ml={1}>
-                    {series.totalLike} Favorites
+                    {series.totalView}
                   </Typography>
                 </Grid>
+
                 <Grid item>
-                  <VisibilityIcon />
-                  <Typography variant="body1" component="span" ml={1}>
-                    {series.totalView} Views
-                  </Typography>
+                <Favorite fontSize="small" />
+                  <Typography variant="body1" component="span" ml={1}>{series.totalLike}</Typography>
                 </Grid>
+                
                 <Grid item>
-                  <ChapterIcon />
+                  <ChapterIcon fontSize="small" />
                   <Typography variant="body1" component="span" ml={1}>
-                    {series.totalChapter} chương
+                    {series.totalChapter}
                   </Typography>
                 </Grid>
               </Grid>
               <p>
-                <strong><StatusIcon /> Trạng thái: </strong>
+                <StatusIcon fontSize="small" />
+                <Typography variant="body1" component="span" ml={1}>
                 {series.seriesState === "ONGOING"
                   ? "Đang tiến hành"
                   : "Kết thúc"}
-              </p>
-            </div>
-          </div>
-        </>
+                  </Typography>
+                
+              </p> 
+            </Grid>
+          {/* </div> */}
+        </Grid>
       )}
+      
     </div>
   );
 }

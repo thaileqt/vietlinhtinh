@@ -32,7 +32,7 @@ const AddChapter = () => {
 
     ChapterService.addChapter(chapterData)
       .then(() => {
-        window.location.href(paths.compose.allChapter(slug));
+        window.location.href = paths.compose.allChapter(slug);
       })
       .catch((error) => {
         setIsSubmitting(false);
