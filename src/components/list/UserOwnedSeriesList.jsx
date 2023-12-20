@@ -13,7 +13,7 @@ const UserOwnedSeriesList = ({ series }) => {
     };
   
   return (
-    <List>
+    <List sx={{ width: '100%', bgcolor: '#f2f2f2'}}>
       {series.map((series, index) => (
         <React.Fragment key={series.id}>
           {index === 0 && <Divider />}

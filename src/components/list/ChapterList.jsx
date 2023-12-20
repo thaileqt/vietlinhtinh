@@ -92,7 +92,7 @@ export default function ChapterList({ slug }) {
                 <div style={{ padding: "20px" }}>Chưa có chương nào</div>
             )}
             </div>
-            {totalPages && <Pagination count={totalPages} variant="outlined" shape="rounded" onChange={handlePageChange} 
+            {(totalPages && totalPages > 0) && <Pagination count={totalPages} variant="outlined" shape="rounded" onChange={handlePageChange} 
                 style={{
                     display: 'flex',
                     alignItems: 'center',

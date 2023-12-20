@@ -21,13 +21,14 @@ export default function RegistrationForm({ setRegistrationForm, registrationForm
       className="registration-form"
       sx={{
         position: 'absolute',
+        marginTop: '15px',
         top: 'calc(100% + 10px)',
-        right: 0,
-        backgroundColor: 'rgba(100, 0, 50, 0.8)', // Transparent background color
-        border: '1px solid #8e005f',
+        right: -20,
+        backgroundColor: 'rgba(100, 0, 50, 1)', // Transparent background color
+        // border: '1px solid #8e005f',
         padding: '10px 20px',
         zIndex: 999,
-        borderRadius: '8px',
+        borderRadius: '3px',
         color: 'white',
         fontFamily: 'Arial, sans-serif',
         width: '220px', // Width of the form

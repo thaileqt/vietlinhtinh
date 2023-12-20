@@ -1,6 +1,8 @@
 import { Avatar, Button, Grid, Typography } from '@mui/material';
 import CoffeeIcon from '@mui/icons-material/LocalCafe'; // Assuming Coffee Icon is available in Material-UI
 import PersonAddIcon from '@mui/icons-material/PersonAdd'; // Icon for Follow button
+import paths from '../../commons/paths';
+import PropTypes from 'prop-types';
 
 const Author = ({ author }) => {
   return (
@@ -39,6 +41,7 @@ const Author = ({ author }) => {
                 cursor: 'pointer', // Change cursor to pointer on hover 
               },
             }}
+            onClick={() => {window.location.href = paths.profile(author.username)}}
           >
             {author.name}
           </Typography>
@@ -72,6 +75,10 @@ const Author = ({ author }) => {
       </Grid>
     </Grid>
   );
+};
+
+Author.propTypes = {
+  author: PropTypes.object.isRequired,
 };
 
 export default Author;

@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { IconButton, Avatar, Stack } from '@mui/material';
 import { Search } from '@mui/icons-material';
 import ArrowDropDownOutlinedIcon from '@mui/icons-material/ArrowDropDownOutlined';
+import ArrowDropUpOutlinedIcon from '@mui/icons-material/ArrowDropUpOutlined';
+
 import { InputGroup, Nav, NavDropdown, Container, Navbar, Form } from 'react-bootstrap';
 
 import UserService from '../../services/user.service';
@@ -199,14 +201,22 @@ export default function MyNavbar ({ currentUser, logOut }) {
                     <Stack direction="row" sx={{ alignItems: 'center', '& > :not(style)': { m: 1 } }}>
                       <Nav.Link onClick={handleLoginClick} style={{ color: "rgb(233, 233, 233)", position: 'relative' }}>
                         Login
-                        {clicking === "login" && <ArrowDropDownOutlinedIcon style={{ color: "rgb(233, 233, 233)", position: 'absolute', bottom: '-20px', left: '50%', transform: 'translateX(-50%)', cursor: 'pointer' }} onClick={handleLoginClick} />}
+                        {/* {clicking === "login" && <ArrowDropDownOutlinedIcon style={{ color: "rgb(233, 233, 233)", position: 'absolute', bottom: '-20px', left: '50%', transform: 'translateX(-50%)', cursor: 'pointer' }} onClick={handleLoginClick} />} */}
+                        {clicking === "login" && <ArrowDropUpOutlinedIcon fontSize="large" style={{ color: "rgb(100, 0, 50)", position: 'absolute', bottom: '-70px', left: '50%', transform: 'translateX(-50%)', fontSize:"6rem" }} onClick={handleLoginClick} />}
+                        {showLoginForm && (
+                            <LoginForm setShowLoginForm={setShowLoginForm} loginFormRef={loginFormRef} />
+                        )}
                       </Nav.Link>
+                    
                     </Stack >
                     
                     <Stack direction="row" sx={{ alignItems: 'center', '& > :not(style)': { m: 1 } }}>
                       <Nav.Link onClick={handleRegisterClick} style={{ color: "rgb(233, 233, 233)", position: 'relative' }}>
                         Register
-                        {clicking === "register" && <ArrowDropDownOutlinedIcon style={{ color: "rgb(233, 233, 233)", position: 'absolute', bottom: '-20px', left: '50%', transform: 'translateX(-50%)', cursor: 'pointer' }} onClick={handleRegisterClick} />}
+                        {clicking === "register" && <ArrowDropUpOutlinedIcon fontSize="large" style={{ color: "rgb(100, 0, 50)", position: 'absolute', bottom: '-70px', left: '50%', transform: 'translateX(-50%)', fontSize: "6rem" }} onClick={handleRegisterClick} />}
+                        {showRegistrationForm && (
+                            <RegistrationForm setShowRegistrationForm={setShowRegistrationForm} registrationFormRef={registrationFormRef} />
+                        )}
                       </Nav.Link>
                     </Stack >
                     
@@ -215,12 +225,8 @@ export default function MyNavbar ({ currentUser, logOut }) {
         
         </Navbar.Collapse>
       </Container>
-      {showLoginForm && (
-          <LoginForm setShowLoginForm={setShowLoginForm} loginFormRef={loginFormRef} />
-      )}
-      {showRegistrationForm && (
-          <RegistrationForm setShowRegistrationForm={setShowRegistrationForm} registrationFormRef={registrationFormRef} />
-      )}
+      
+      
     </Navbar>
     </>
   );

@@ -15,6 +15,7 @@ import LikeService from '../services/like.service';
 import AuthService from '../services/auth.service';
 
 import paths from '../commons/paths';
+import { Divider, Stack, Typography } from '@mui/material';
 
 
 
@@ -204,6 +205,12 @@ const ChapterDetail = () => {
             fontSize={fontSize}
             setFontSize={setFontSize}
           />
+          <Stack direction="column" style={{ marginBottom: '10px', alignItems: 'center'}}>
+            <SeriesThumbnail src={series.cover} size={1} />
+            <Typography variant="h5" sx={{ marginTop: "10px"}}>{series.title}</Typography>
+            <Typography variant="h6">by {series.author.username}</Typography>
+            <hr />
+          </Stack>
 
         
           <div className="chapter-info" style={{
@@ -212,24 +219,6 @@ const ChapterDetail = () => {
                 marginBottom: '10px',
                 alignItems: 'center',
             }}>
-                {/* Row 1 */}
-                <div style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  marginBottom: '10px',
-
-                backgroundColor: 'green',
-                }}>
-                  {/* Left Column */}
-                  <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <SeriesThumbnail src={series.cover} size={2} />
-                    <div style={{ marginLeft: '10px' }}>
-                      <h3>{series.title}</h3>
-                      <h3>{"@" + series.author.username}</h3>
-                    </div>
-                  </div>
-                </div>
 
                 {/* Row 2 */}
                 <div style={{ marginBottom: '10px' }}>

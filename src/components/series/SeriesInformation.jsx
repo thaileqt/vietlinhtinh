@@ -30,7 +30,6 @@ export default function SeriesInformation({ series }) {
               <p>
                 {series.genres.map((element) => (
                   <Link to="#" key={element}>
-                    {" "}
                     <Genre name={element} color="white" backgroundColor="rgb(62, 82, 122)" />
                   </Link>
                 ))}

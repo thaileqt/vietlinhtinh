@@ -114,7 +114,8 @@ export default function SeriesCarousel ({ seriesList, heading, indexMark=false, 
             <div className="series-slide" key={series.id}>
               <Box display="flex" flexDirection="column" alignItems="center" textAlign="center" maxWidth="100px" position="relative">
     
-                <SeriesThumbnail src={series.cover} borderRadius={3} width={100} height={140} onHover={true}/>
+                <SeriesThumbnail src={series.cover} borderRadius={3} width={100} height={140} onHover={true}
+                    handleImageClick={() => {window.location.href = paths.series(series.slug)}}/>
                 {indexMark===true && (
                     <Typography
                     variant="h6"

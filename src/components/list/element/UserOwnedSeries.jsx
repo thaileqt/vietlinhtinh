@@ -20,21 +20,30 @@ const renderDescription = (description) => {
 
 export default function UserOwnedSeries({ series }) {
   return (
-    <Stack direction="column">
-        <Grid container spacing={2} xs={12}>
-
+    <Stack direction="column" marginTop="30px">
+        <Grid container>
               <Stack direction="row">
-                  
-                  <Stack direction="column" spacing={0.3} alignItems="center">
+                  <Stack direction="column" alignItems="center" paddingLeft="10px">
                     {/* Thumbnail */}
-                    <SeriesThumbnail src={series.cover} borderRadius={3} size={0.9} />
+                    <SeriesThumbnail src={series.cover} borderRadius={3} size={0.9} 
+                      handleImageClick={() => window.location.href = paths.series(series.slug)} />
                     {/* Rating */}
                     <Rating name="read-only" value={3.5} readOnly />
                   </Stack>
                   
 
                   <Stack direction="column">
-                    <Typography variant="subtitle1">{series.title}</Typography>
+                    <Typography variant="h6"
+                    onClick={() => window.location.href = paths.series(series.slug)}
+                    // add hover will change color
+                    sx={{ 
+                      '&:hover': {
+
+                      cursor: 'pointer', 
+                        color: '#ff3d47',
+                      },
+                  }}
+                    >{series.title}</Typography>
                     {/* View, Like, Chapter  */}
                     <Typography variant="body2" color="textSecondary">
                       <VisibilityOutlined fontSize="small"/> {series.totalView} <FavoriteOutlined fontSize="small" />{series.totalLike} <LibraryBooksOutlined/> {series.totalChapter}
@@ -43,7 +52,7 @@ export default function UserOwnedSeries({ series }) {
                     <Typography variant="body2" color="textSecondary">
                       {series.genres && series.genres.map((element) => (
                           <span key={element ? element : "z"}>
-                          <Genre name={element ? element : "Unknown"} />
+                          <Genre name={element ? element : "Unknown"} color="black" />
                           </span>
                       ))}
                       </Typography>
@@ -56,7 +65,7 @@ export default function UserOwnedSeries({ series }) {
 
         </Grid>
         {/* Row 2 for buttons */}
-        <Grid container justifyContent="flex-end" xs={12}>
+        <Grid container justifyContent="flex-end">
           <CustomButton name="Chương" icon={<AddOutlined />} color="transparent" onClick={() => window.location.href = paths.compose.addChapter(series.slug)} />
           <CustomButton name="Sửa" icon={<EditOutlined />} color="transparent" onClick={() => window.location.href = paths.compose.editSeries(series.slug)} />
         </Grid>

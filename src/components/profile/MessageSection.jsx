@@ -1,18 +1,19 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Avatar,
   Typography,
   TextField,
   Button,
   Grid,
-  IconButton,
   Stack,
 } from "@mui/material";
 import defaultAvatar from "../../assets/default_avatar.jpg";
 import utils from "../../commons/utils";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import UserService from "../../services/user.service";
 import Role from "../misc/Role";
+import MessageService from "../../services/message.service";
+
+import PropTypes from "prop-types";
+
 
 const MessageSection = ({ messages, profile_username }) => {
   const [replyingTo, setReplyingTo] = useState(null);
@@ -22,11 +23,11 @@ const MessageSection = ({ messages, profile_username }) => {
   };
 
   const handleReplySubmit = () => {
-    UserService.postReplyMessage({
+    MessageService.postReplyMessage({
       content: document.getElementById("replyContent").value,
       messageId: replyingTo
     }).then(
-      (response) => {
+      () => {
         window.location.reload();
       },
       (error) => {
@@ -80,13 +81,13 @@ const MessageSection = ({ messages, profile_username }) => {
   );
 
   const handleMessageSubmit = () => {
-    UserService.postMessage({
+    MessageService.postMessage({
       content: document.getElementById("messages").value,
       receiver: {
         username: profile_username
       }
     }).then(
-      (response) => {
+      () => {
         window.location.reload();
       },
       (error) => {
@@ -150,7 +151,10 @@ const MessageSection = ({ messages, profile_username }) => {
                       </Typography>
                     </Stack>
                   </div>
-                  <span>Reply</span>
+                  <span
+                    className="reply-btn"
+                    onClick={() => handleReplyClick(message.id)}
+                  >Reply</span>
                   {message.replyMessages && renderReplyMessages(message.replyMessages)}
                   </Stack>
                   {/* Reply */}
@@ -165,4 +169,8 @@ const MessageSection = ({ messages, profile_username }) => {
   );
 };
 
+MessageSection.propTypes = {
+  messages: PropTypes.array.isRequired,
+  profile_username: PropTypes.string.isRequired,
+};
 export default MessageSection;

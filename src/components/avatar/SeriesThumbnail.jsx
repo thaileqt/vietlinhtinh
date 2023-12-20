@@ -4,7 +4,7 @@ import "./SeriesThumbnail.css";
 
 
 
-const SeriesThumbnail = ({ src, size, borderRadius, shadow, onHover=false }) => {
+const SeriesThumbnail = ({ src, size, borderRadius, shadow, onHover=false, handleImageClick }) => {
   SeriesThumbnail.propTypes = {
     src: PropTypes.string,
     size: PropTypes.number,
@@ -13,6 +13,7 @@ const SeriesThumbnail = ({ src, size, borderRadius, shadow, onHover=false }) => 
     width: PropTypes.number,
     height: PropTypes.number,
     onHover: PropTypes.bool,
+    handleImageClick: PropTypes.func,
   };
     // size is from 1 - 10
 
@@ -32,6 +33,7 @@ const SeriesThumbnail = ({ src, size, borderRadius, shadow, onHover=false }) => 
                 borderRadius: borderRadius ? `${borderRadius}px` : "0px",
                 boxShadow: shadow ? "0px 0px 10px 0px rgba(0, 0, 0, 0.9)" : "none",
               }}
+              onClick={handleImageClick}
             
             />
         );  

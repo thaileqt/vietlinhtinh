@@ -6,9 +6,11 @@ TransparentButton.propTypes = {
     icon: PropTypes.object,
     color: PropTypes.string,
     borderRadius: PropTypes.string,
-    fontSize: PropTypes.string,
+    size: PropTypes.number,
     padding: PropTypes.string,
     onClick: PropTypes.func,
+    invert: PropTypes.bool,
+    textColor: PropTypes.string,
 };
 
 
@@ -17,27 +19,31 @@ export default function TransparentButton({
   icon, 
   color="info.main", 
   borderRadius="1px",
-  fontSize="0.8rem", 
+  size=1, 
   padding="0.2rem 0.5rem", 
-  onClick }) {
+  onClick,
+  textColor="rgb(233, 233, 233)",
+  invert=false }) {
   return (
     <div>
       <Button
-        variant="outlined"
         onClick={onClick}
-        sx={{ backgroundColor: "transparent", 
-            color: color,
+        sx={{
+            color: invert === false ? color : textColor,
             textTransform: 'none',
-            borderColor: color, 
+            borderColor: invert === false ? color : "transparent", 
             mx: 1, 
-            fontSize: fontSize, 
+            fontSize: `${size}rem`, 
             padding: padding,
             borderRadius: borderRadius,
+            border: "1px solid",
+            backgroundColor: invert === true ? color : "transparent",
             // add hover effect, display shadow when hover, the color will be a little bit darker
             '&:hover': {
-              boxShadow: 1,
-              backgroundColor: "transparent",
-              opacity: 0.8,
+              boxShadow: 3,
+              backgroundColor: invert === true ? color : "transparent",
+              color: invert === true ? textColor : color,
+              borderColor: invert === false ? color : "transparent",
             },
           }}
         >

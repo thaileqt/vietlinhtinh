@@ -9,9 +9,6 @@ export default function LoginForm({ setShowLoginForm, loginFormRef }) {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    // Add logic for login here
-    console.log('Username:', username);
-    console.log('Password:', password);
     AuthService.login(username, password)
         .then((response) => {
             console.log(response.data);
@@ -29,13 +26,14 @@ export default function LoginForm({ setShowLoginForm, loginFormRef }) {
       className="login-form"
       sx={{
         position: 'absolute',
+        marginTop: '15px',
         top: 'calc(100% + 10px)',
-        right: 0,
-        backgroundColor: 'rgba(100, 0, 50, 0.8)', // Transparent background color
-        border: '1px solid #8e005f',
+        right: -20,
+        backgroundColor: 'rgba(100, 0, 50, 1)', // Transparent background color
+        // border: '1px solid #8e005f',
         padding: '10px 20px',
         zIndex: 999,
-        borderRadius: '8px',
+        borderRadius: '3px',
         color: 'white',
         fontFamily: 'Arial, sans-serif',
         width: '220px', // Reduced width
@@ -117,6 +115,7 @@ export default function LoginForm({ setShowLoginForm, loginFormRef }) {
                 backgroundColor: '#6e004f',
                 },
             }}
+            onClick={handleLogin}
             >
             Login
             </Button>
