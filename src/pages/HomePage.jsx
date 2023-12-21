@@ -60,7 +60,9 @@ const Home = () => {
  
 
   return (
-    <div className="container" >
+    <div className="container" // set min height is screen height
+      style={{ minHeight: "100vh" }}
+    >
       
       <div>
         <SeriesCarousel seriesList={hotSeries} heading={"Truyện Hot"} indexMark={true} showRating={true}/>

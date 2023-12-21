@@ -7,6 +7,7 @@ const API_URL = request_utils.host + "/api/chapters";
 const ChapterService = {
     getChapterBySeriesSlugAndChapterNumber: (seriesSlug, chapterNumber) => request_utils.handleGetRequest(API_URL + "/get-by-series-and-chapter/" + seriesSlug + "/" + chapterNumber),
     getChaptersBySeriesSlug: (slug, page, size) => request_utils.handleGetRequest(API_URL + "/get-by-series-slug/" + slug + "?page=" + page + "&size=" + size),
+    getChapterAndAdjacentChapters: (slug, chapterNumber) => request_utils.handleGetRequest(API_URL + "/get-chapter-and-adjacent-chapters/" + slug + "/" + chapterNumber),
     getAllChaptersBySeriesIdForNavigation: (seriesId) => request_utils.handleGetRequest(API_URL + "/get-all-by-series-id-for-navigation/" + seriesId),
     countTotalChapters: (slug) => request_utils.handleGetRequest(API_URL + "/count-by-series-slug/" + slug),
 

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { TextField, Button, FormControlLabel, Checkbox, Link, Box } from '@mui/material';
+import AuthService from '../../services/auth.service';
 
 export default function RegistrationForm({ setRegistrationForm, registrationFormRef }) {
   const [username, setUsername] = useState('');
@@ -9,11 +10,20 @@ export default function RegistrationForm({ setRegistrationForm, registrationForm
 
   const handleRegistration = (e) => {
     e.preventDefault();
-    // Add logic for registration here
-    console.log('Username:', username);
-    console.log('Email:', email);
-    console.log('Password:', password);
-    console.log('Confirm Password:', confirmPassword);
+    // assert 
+    if (password !== confirmPassword) {
+      alert('Passwords do not match!');
+      return;
+    }
+    AuthService.register(username, email, password)
+      .then((response) => {
+        console.log(response.data);
+        // reload the page
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.error('Error sending review:', error);
+      });
   };
 
   return (
@@ -36,7 +46,7 @@ export default function RegistrationForm({ setRegistrationForm, registrationForm
       ref={registrationFormRef}
     >
       {/* Registration form */}
-      <form onSubmit={handleRegistration}>
+      <form>
         {/* Username Input */}
         <TextField
           label="Username"
@@ -143,6 +153,7 @@ export default function RegistrationForm({ setRegistrationForm, registrationForm
                 backgroundColor: '#6e004f',
               },
             }}
+            onClick={handleRegistration}
           >
             Register
           </Button>

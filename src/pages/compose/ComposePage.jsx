@@ -5,6 +5,7 @@ import { Button, CircularProgress, Pagination } from '@mui/material';
 import SeriesService from '../../services/series.service';
 import AddIcon from '@mui/icons-material/Add';
 import paths from '../../commons/paths';
+import MyBreadcrumb from '../../components/layout/Breadcrumb';
 
 
 const AddSeriesButton = () => {
@@ -85,6 +86,7 @@ const ComposePage = () => {
 
   return (
     <div className="container-fluid">
+      <MyBreadcrumb />
       <div>
 
         <AddSeriesButton />

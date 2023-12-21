@@ -8,6 +8,7 @@ import UserInformation from "../components/profile/UserInformation";
 import UserService from "../services/user.service";
 import { useParams } from "react-router-dom";
 import MessageService from "../services/message.service";
+import MyBreadcrumb from "../components/layout/Breadcrumb";
 
 
 
@@ -54,8 +55,11 @@ const Profile = () => {
 
 
   return (
-    <div className="container mt-4">
-      {profileData && (
+    
+      (profileData && (
+        <>
+        <MyBreadcrumb items={[profile_username]} />
+        <div className="container mt-4">
         <Grid container spacing={3}>
           {/* Left Column: User Profile */}
           <Grid item xs={12} md={3}>
@@ -73,8 +77,11 @@ const Profile = () => {
             <SeriesSection /> */}
           </Grid>
         </Grid>
-      )}
+            
+
     </div>
+    </>
+      ))
   );
 };
 

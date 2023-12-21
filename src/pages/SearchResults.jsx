@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import SeriesService from "../services/series.service";
 import paths from "../commons/paths";
+import MyBreadcrumb from "../components/layout/Breadcrumb";
 
 const SearchResults = () => {
   const [series, setSeries] = useState([]);
@@ -27,6 +28,7 @@ const SearchResults = () => {
 
   return (
     <div className="container">
+      <MyBreadcrumb items={[keyword]} />
       <header className="jumbotron">
         <h1>Từ khoá: {keyword}</h1>
 

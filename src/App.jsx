@@ -3,7 +3,6 @@ import './App.css';
 import eventBus from './commons/EventBus';
 import AuthService from './services/auth.service';
 import { Routes, Route } from 'react-router-dom';
-import LoginPage from './pages/LoginPage';
 import HomePage from './pages/HomePage';
 import MyNavbar from './components/layout/Navbar';
 import RegisterPage from './pages/RegisterPage';
@@ -12,7 +11,7 @@ import SeriesDetail from './pages/SeriesDetail';
 import SearchResults from './pages/SearchResults';
 import ChapterDetail from './pages/ChapterDetail';
 import SearchByGenreResults from './pages/SearchByGenreResults';
-import MyBreadcrumb from './components/layout/Breadcrumb';
+// import MyBreadcrumb from './components/layout/Breadcrumb';
 import Footer from './components/layout/Footer';
 
 import ComposePage from './pages/compose/ComposePage';
@@ -56,11 +55,10 @@ function App() {
         currentUser={currentUser}
         logOut={logOut} 
       />
-      <MyBreadcrumb />
+      {/* <MyBreadcrumb /> */}
 
       <div>
         <Routes>
-          <Route exact path="/login" element={<LoginPage currentUser={currentUser} />} />
           <Route exact path="/register" element={<RegisterPage />} />
           <Route exact path="/profile/:profile_username" element={<ProfilePage />} />
 

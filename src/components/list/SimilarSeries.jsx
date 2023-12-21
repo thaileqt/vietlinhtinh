@@ -29,8 +29,8 @@ const SimilarSeries = ({ seriesList }) => {
         backgroundColor: 'black',
       }}>Truyện tương tự</h6>
       
-      {seriesList.map((series) => (
-          <ListItem key={series.id} alignItems="flex-start" >
+      {seriesList.map((series, index) => (
+          <ListItem key={index} alignItems="flex-start" >
             <ListItemAvatar sx={{paddingRight: "10px"}}
                               onClick={() => {window.location.href = paths.series(series.slug)}}>
               <SeriesThumbnail src={series.cover} size={0.6} shadow={false} />

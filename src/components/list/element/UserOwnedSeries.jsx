@@ -6,6 +6,7 @@ import CustomButton from "../../button/CustomButton";
 import { AddOutlined, EditOutlined, FavoriteOutlined, LibraryBooksOutlined, VisibilityOutlined } from "@mui/icons-material";
 import paths from "../../../commons/paths";
 import PropTypes from "prop-types";
+import SeriesService from "../../../services/series.service";
 
 UserOwnedSeries.propTypes = {
     series: PropTypes.object.isRequired,
@@ -19,6 +20,20 @@ const renderDescription = (description) => {
 };
 
 export default function UserOwnedSeries({ series }) {
+  const handleDeleteSeries = () => {
+    // ask for confirmation
+    if (!window.confirm("Bạn có chắc chắn muốn xóa bộ truyện này?")) {
+      
+      return;
+    }
+    SeriesService.deleteSeries(series.id)
+      .then(() => {
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
   return (
     <Stack direction="column" marginTop="30px">
         <Grid container>
@@ -61,6 +76,19 @@ export default function UserOwnedSeries({ series }) {
                         {renderDescription(series.description)} 
                       </Typography>
                   </Stack>
+                  <a onClick={handleDeleteSeries} style={{ // place at the top right corner
+                    position: 'absolute',
+                    top: '0px',
+                    right: '0px',
+                    whiteSpace: 'nowrap',
+                    color: '#ff3d47', 
+                    textDecoration: 'underline',
+                    padding: '10px', // add hover
+                    '&:hover': {
+                      cursor: 'pointer', 
+                      color: '#ff3d47',
+                    },
+                    }}>Delete</a>
               </Stack>
 
         </Grid>

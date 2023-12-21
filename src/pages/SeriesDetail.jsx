@@ -11,6 +11,8 @@ import SimilarSeries from '../components/list/SimilarSeries';
 import Author from '../components/user/Author';
 import SeriesDetailTabs from '../components/tabs/SeriesDetailTabs';
 import SeriesService from '../services/series.service';
+import { CircularProgress } from '@mui/material';
+import MyBreadcrumb from '../components/layout/Breadcrumb';
 
 
 const SeriesDetail = () => {
@@ -87,10 +89,12 @@ const SeriesDetail = () => {
     }, [slug]);
 
     return (
-        
-        (series && (
+        <div style={{ minHeight: "100vh" }}>
             
-            <>
+        {series ? (
+            
+            <div >
+                <MyBreadcrumb items={[series.title]} />
             
                 {/* SeriesInformation */}
                 <div className="series-information-background"> {/* Change bg-info to the desired Bootstrap background color class */}
@@ -120,8 +124,11 @@ const SeriesDetail = () => {
                     </div>
                 </div>
       
-            </>
-        ))
+            </div>
+        ) : (
+            <CircularProgress />
+        )}
+        </div>
     );
 };
 

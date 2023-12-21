@@ -54,7 +54,7 @@ export default function SeriesSection({profile_username}) {
                 {totalPages > 1 ? <Pagination count={totalPages} variant="outlined" shape="rounded" onChange={handleChange} /> : null}
             </div>
             ) : (
-                "Nguời dùng này chưa đăng bộ truyện nào."
+                "Người dùng này chưa đăng bộ truyện nào."
             )
         ) : (
             <Box sx={{ display: 'flex' }}>

@@ -108,6 +108,7 @@ function RecentSeriesList({recentUpdatedSeries}) {
                           cursor: "pointer",
                         },
                       }}
+                      onClick={() => {window.location.href = paths.profile(series.author.username)}}
                     >
                       {series.author.username}
                     </Typography>

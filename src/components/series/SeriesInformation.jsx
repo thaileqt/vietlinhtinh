@@ -26,7 +26,7 @@ export default function SeriesInformation({ series }) {
           </ListItemAvatar>
 
             <Grid>
-              <p><Typography variant="h4">{series.title}</Typography></p>
+              <Typography variant="h4"><p>{series.title}</p></Typography>
               <p>
                 {series.genres.map((element) => (
                   <Link to="#" key={element}>

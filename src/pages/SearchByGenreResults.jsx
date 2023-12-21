@@ -9,6 +9,7 @@ import SeriesService from "../services/series.service";
 import SeriesThumbnail from "../components/avatar/SeriesThumbnail";
 
 import paths from "../commons/paths";
+import MyBreadcrumb from "../components/layout/Breadcrumb";
 
 
 export default function SearchByGenreResults() {
@@ -72,6 +73,7 @@ const [status, setStatus] = useState("all");
 
   return (
     <div>
+      <MyBreadcrumb items={[utils.genre_name_mapper[genre.toUpperCase()]]} />
         <header style={{
             fontSize: "0.9rem", 
             // darker than white

@@ -14,7 +14,7 @@ const UserOwnedSeriesList = ({ series }) => {
   
   return (
     <List sx={{ width: '100%', bgcolor: '#f2f2f2'}}>
-      {series.map((series, index) => (
+      {(series && series.length > 0) ? series.map((series, index) => (
         <React.Fragment key={series.id}>
           {index === 0 && <Divider />}
               <UserOwnedSeries series={series} />
@@ -34,7 +34,9 @@ const UserOwnedSeriesList = ({ series }) => {
             <Divider />
           </Box> */}
         </React.Fragment>
-      ))}
+      )) : (<div>
+        Người dùng này chưa đăng bộ truyện nào.
+      </div>)}
     </List>
   );
 };

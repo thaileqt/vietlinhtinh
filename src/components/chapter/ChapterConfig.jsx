@@ -12,8 +12,8 @@ export default function ChapterConfig({
   seriesId,
   showSettings, 
   setShowSettings, 
-  currentChapterNumber, 
   totalChapter, 
+  currentChapter,
   handleClickNextChapter, 
   handleClickPrevChapter, 
   lineSpacing, 
@@ -87,20 +87,19 @@ export default function ChapterConfig({
       </Tooltip>
 
       <div style={{ marginTop: '10px', display: 'flex', flexDirection: 'row' }}>
-        {currentChapterNumber > 1 && (
+        
           <Tooltip title="Quay về hương trước">
-            <Button variant="primary" onClick={handleClickPrevChapter} style={{ marginRight: '5px' }}>
-              <SvgIcon> <ArrowBackIosNewIcon /> </SvgIcon>
+            <Button variant="primary" onClick={handleClickPrevChapter} style={{ marginRight: '5px' }} disabled={currentChapter > 1 ? false : true}>
+              <SvgIcon><ArrowBackIosNewIcon /> </SvgIcon>
             </Button>
           </Tooltip>
-        )}
-        {currentChapterNumber < totalChapter && (
+        
           <Tooltip title="Qua chương tiếp theo">
-            <Button variant="primary" onClick={handleClickNextChapter}>
-              <SvgIcon> <ArrowForwardIosIcon /> </SvgIcon>
+            <Button variant="primary" onClick={handleClickNextChapter} disabled={currentChapter < totalChapter ? false : true}>
+              <SvgIcon>{(currentChapter < totalChapter) ? <ArrowForwardIosIcon /> : <ArrowForwardIosIcon disabled/>}</SvgIcon>
             </Button>
           </Tooltip>
-        )}
+        
       </div>
 
       {showSettings && (

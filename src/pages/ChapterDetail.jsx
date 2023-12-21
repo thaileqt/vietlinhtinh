@@ -10,12 +10,13 @@ import ChapterConfig from '../components/chapter/ChapterConfig';
 // Services
 import SeriesService from '../services/series.service';
 import ChapterService from '../services/chapter.service';
-import MarkerService from '../services/marker.service';
+// import MarkerService from '../services/marker.service';
 import LikeService from '../services/like.service';
 import AuthService from '../services/auth.service';
 
 import paths from '../commons/paths';
-import { Divider, Stack, Typography } from '@mui/material';
+import { CircularProgress, Stack, Typography } from '@mui/material';
+import MyBreadcrumb from '../components/layout/Breadcrumb';
 
 
 
@@ -50,95 +51,90 @@ const ChapterDetail = () => {
 
 
 
-      ChapterService.getChapterBySeriesSlugAndChapterNumber(slug, chapterNumber)
-        .then((response) => { 
-          setChapter(response.data); 
-          setLikeCount(response.data.likeCount);
-          setCommentCount(response.data.comments.length);
-          return response.data.id;
+      ChapterService.getChapterAndAdjacentChapters(slug, chapterNumber)
+        .then((response) => {
+            for (let i = 0; i < response.data.length; i++) {
+                if (response.data[i].chapterNumber === parseInt(chapterNumber)) {
+                    setChapter(response.data[i]);
+                    setLikeCount(response.data[i].likeCount);
+                    setCommentCount(response.data[i].comments.length);
+                } else if (response.data[i].chapterNumber === parseInt(chapterNumber) + 1) {
+                    setNextChapter(response.data[i]);
+                } else if (response.data[i].chapterNumber === parseInt(chapterNumber) - 1) {
+                    setPrevChapter(response.data[i]);
+                }
+            }
         }) 
-        .then((chapterId) => {
-
-          MarkerService.getMarkerInThisChapter(chapterId)
-            .then((response) => { 
-              console.log(response.data)
-              setMarker(response.data); 
-              })
-              .catch((error) => { console.error('Error fetching marker:', error); });
-
-          LikeService.isChapterLiked(chapterId)
-          .then((response) => {
-            setIsLike(response.data);
-            
-          })
-          .catch((error) => { console.error('Error fetching like:', error); });
-        })
-      
         .catch((error) => { console.error('Error fetching chapter details:', error); });
 
-        
+        LikeService.isChapterLiked(slug, chapterNumber)
+        .then((response) => {
+            setIsLike(response.data);
+        })
+        .catch((error) => { console.error('Error fetching like:', error); });
           
         ChapterService.countTotalChapters(slug)
         .then((response) => { 
           setTotalChapter(response.data); 
-          loadAdjacentChapters(response.data);
         })
         .catch((error) => { console.error('Error fetching total chapter:', error); });
       }, [slug, chapterNumber]);
 
-    const loadAdjacentChapters = async (totalChapter) => {
-      // Fetch next and previous chapters based on the current chapter number
-      const nextChapterNumber = parseInt(chapterNumber, 10) + 1;
-      const prevChapterNumber = parseInt(chapterNumber, 10) - 1;
-      if (nextChapterNumber <= totalChapter) {
-        const nextChapterData = await ChapterService.getChapterBySeriesSlugAndChapterNumber(slug, nextChapterNumber);
-        setNextChapter(nextChapterData.data);
-      } else {
-        console.log(nextChapterNumber, totalChapter);
-      }
-      if (prevChapterNumber > 0) {
-        const prevChapterData = await ChapterService.getChapterBySeriesSlugAndChapterNumber(slug, prevChapterNumber);
-        setPrevChapter(prevChapterData.data);
-      }
-      
-      
-    };
 
     const handleFavoriteClick = () => {
-      
       if (!user) {
         alert("Please login to like this chapter");
         return;
       }
       if (is_like === true) {
+
+        setIsLike(false);
+        setLikeCount(likeCount - 1);
         LikeService.unlikeChapter(chapter.id)
-          .then((response) => {
-            setIsLike(false);
-            setLikeCount(likeCount - 1);
-            
-          })
-          .catch((error) => { console.error('Error fetching like:', error); });
-      } else if (is_like === false){
-        LikeService.likeChapter(chapter.id)
-          .then((response) => {
+          .catch((error) => { 
+            console.error('Error fetching like:', error); 
             setIsLike(true);
             setLikeCount(likeCount + 1);
-            // alert("Like chapter successfully");
-          })
-          .catch((error) => { console.error('Error fetching like:', error); });
+        });
+      } else if (is_like === false){
+        setLikeCount(likeCount + 1);
+        setIsLike(true);
+        LikeService.likeChapter(chapter.id)
+          .catch((error) => { 
+            console.error('Error fetching like:', error); 
+            setLikeCount(likeCount - 1);
+            setIsLike(false);
+        });
       }
     }
+
 
     
 
     const handleClickNextChapter = () => {
       if (nextChapter.chapterNumber <= totalChapter) {
         scrollToChapterTitle();
+        const tempChapter = chapter;
         setChapter(nextChapter);
-        chapterNumber++;
-        loadAdjacentChapters(totalChapter);
+        setNextChapter(null);
+        setPrevChapter(tempChapter);
+        setLikeCount(nextChapter.likeCount);
+        setCommentCount(nextChapter.comments.length);
         
+        chapterNumber++;
         navigate(paths.chapter(slug, nextChapter.chapterNumber))
+        
+        ChapterService.getChapterAndAdjacentChapters(slug, chapterNumber)
+            .then((response) => {
+                for (let i = 0; i < response.data.length; i++) {
+                    if (response.data[i].chapterNumber === parseInt(chapterNumber) + 1) {
+                        setNextChapter(response.data[i]);
+                    } else if (response.data[i].chapterNumber === parseInt(chapterNumber) - 1) {
+                        setPrevChapter(response.data[i]);
+                    }
+                }
+            }
+        );
       } else {
         console.log(chapterNumber+1 < totalChapter);
       }
@@ -146,12 +142,30 @@ const ChapterDetail = () => {
     
     const handleClickPrevChapter = () => {
       if (prevChapter.chapterNumber > 0) {
+        
         scrollToChapterTitle();
         setChapter(prevChapter);
+        setNextChapter(null);
+        setLikeCount(prevChapter.likeCount);
+        setCommentCount(prevChapter.comments.length);
         chapterNumber--;
-        loadAdjacentChapters(totalChapter);  
-        
         navigate(paths.chapter(slug, prevChapter.chapterNumber))
+        setPrevChapter(null);
+        ChapterService.getChapterAndAdjacentChapters(slug, chapterNumber)
+            .then((response) => {
+                for (let i = 0; i < response.data.length; i++) {
+                    if (response.data[i].chapterNumber === parseInt(chapterNumber)) {
+                        setChapter(response.data[i]);
+                        setLikeCount(response.data[i].likeCount);
+                        setCommentCount(response.data[i].comments.length);
+                    } else if (response.data[i].chapterNumber === parseInt(chapterNumber) + 1) {
+                        setNextChapter(response.data[i]);
+                    } else if (response.data[i].chapterNumber === parseInt(chapterNumber) - 1) {
+                        setPrevChapter(response.data[i]);
+                    }
+                }
+            }
+        );
       }else {
         console.log(chapterNumber, totalChapter);
       }
@@ -168,34 +182,35 @@ const ChapterDetail = () => {
 
   const toggleMarker = (index) => {
     console.log(index);
-    if (marker && marker.paragraphIndex === index) {
-      MarkerService.deleteMarker(marker.id)
-    } else {
-      setMarker({ 
-        paragraphIndex: index 
-      });
-      MarkerService.createMarker({
-        chapterId: chapter.id,
-        paragraphIndex: index
-      });
+    // if (marker && marker.paragraphIndex === index) {
+    //   MarkerService.deleteMarker(marker.id)
+    // } else {
+    //   setMarker({ 
+    //     paragraphIndex: index 
+    //   });
+    //   MarkerService.createMarker({
+    //     chapterId: chapter.id,
+    //     paragraphIndex: index
+    //   });
 
-    }
+    // }
   };
 
 
 
 
   return (
-    <div>  
+    <div style={{ minHeight: "100vh" }}>  
       {(series && chapter && is_like !== null) ? (
         <div>
+            <MyBreadcrumb items={[series.title, chapter.title]}  />
           <ChapterConfig 
             seriesId={series.id}
             showSettings={showSettings} 
             setShowSettings={setShowSettings} 
             chapter={chapter}
             totalChapter={totalChapter}
-            currentChapterNumber={chapterNumber}
+            currentChapter={chapterNumber}
             handleClickNextChapter={handleClickNextChapter}
             handleClickPrevChapter={handleClickPrevChapter}
             lineSpacing={lineSpacing}
@@ -268,9 +283,7 @@ const ChapterDetail = () => {
   
       </div>
         ) : (
-          <div>
-            Loading...
-          </div>
+          <CircularProgress />
         )}
       
     </div>
