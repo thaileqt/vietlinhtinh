@@ -19,18 +19,6 @@ const SeriesDetail = () => {
     const { slug } = useParams(); // Get the ID parameter from the URL
     const [series, setSeries] = useState(null)
     
-    // const parseDate = (timestamp) => {
-    //     return new Date(timestamp).toLocaleString("en-US", {
-    //         year: "numeric",
-    //         month: "long",
-    //         day: "numeric",
-    //         hour: "numeric",
-    //         minute: "numeric",
-    //         second: "numeric",
-    //       });
-    // };
-    // const [value, setValue] = React.useState(0);
-
     const seriesList = [
         {
             title: "Max & the Unknown",

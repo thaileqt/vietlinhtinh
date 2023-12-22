@@ -16,10 +16,14 @@ export default function RegistrationForm({ setRegistrationForm, registrationForm
       return;
     }
     AuthService.register(username, email, password)
-      .then((response) => {
-        console.log(response.data);
-        // reload the page
-        window.location.reload();
+      .then(() => {
+        AuthService.login(username, password)
+          .then(() => {
+            window.location.reload();
+          })
+          .catch((error) => {
+            console.error('Error logging in:', error);
+          });
       })
       .catch((error) => {
         console.error('Error sending review:', error);
