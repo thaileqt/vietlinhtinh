@@ -1,8 +1,8 @@
 import axios from "axios";
 
 
-const hostname = "http://localhost:8080";
-// const hostname = "https://vietlinhtinh-api-production.up.railway.app";
+// const hostname = "http://localhost:8080";
+const hostname = "https://vietlinhtinh-api-production.up.railway.app";
 
 const getToken = () => {
     return JSON.parse(localStorage.getItem("token"));
@@ -70,7 +70,6 @@ const header_config = () => {
 
 const request_utils = {
     host: hostname,
-    // host: 'https://vietlinhtinh-production.up.railway.app',
     header_config,
     handleGetRequest,
     handlePostRequest,
