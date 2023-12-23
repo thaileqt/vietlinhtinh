@@ -6,10 +6,10 @@ import PropTypes from 'prop-types';
 
 const Author = ({ author }) => {
   return (
-    <Grid container direction="column" alignItems="center" sx={{ border: '1px solid #ccc', borderRadius: '5px' }}>
+    <Grid container direction="column" alignItems="center" sx={{ border: '1px solid rgb(100, 0, 50)', borderRadius: '5px' }}>
       <Grid container>
         <Grid item xs={12}>
-          <Typography variant="h6" sx={{ width: '100%', textAlign: 'center', backgroundColor: "green", color: "white" }}>
+          <Typography variant="h6" sx={{ width: '100%', textAlign: 'center', backgroundColor: "rgb(100, 0, 50)", color: "white" }}>
             Tác giả
           </Typography>
         </Grid>
@@ -17,7 +17,7 @@ const Author = ({ author }) => {
         <Grid item xs={12}>
           <Avatar
             alt={author.name}
-            src={author.avatar}
+            src={author.avatar || "https://cdn.dribbble.com/users/1463082/screenshots/4325775/__________-1.png"}
             sx={{
               width: 75,
               height: 75,

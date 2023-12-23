@@ -4,7 +4,7 @@ import { useRef } from 'react';
 // Compoenents
 import CommentSection from '../components/chapter/CommentSection';
 import ContentRender from '../components/chapter/ContentRender';
-import { CommentOutlined, FavoriteBorderOutlined, FavoriteOutlined, Visibility } from '@mui/icons-material';
+import { CommentOutlined, FavoriteBorderOutlined, FavoriteOutlined, PersonPin, Visibility } from '@mui/icons-material';
 import SeriesThumbnail from '../components/avatar/SeriesThumbnail';
 import ChapterConfig from '../components/chapter/ChapterConfig';
 // Services
@@ -48,6 +48,7 @@ const ChapterDetail = () => {
         .then((response) => {
             for (let i = 0; i < response.data.length; i++) {
                 if (response.data[i].chapterNumber === parseInt(chapterNumber)) {
+                    console.log(response.data[i]);
                     setChapter(response.data[i]);
                     setLikeCount(response.data[i].likeCount);
                     setCommentCount(response.data[i].comments.length);
@@ -87,7 +88,7 @@ const ChapterDetail = () => {
           .catch((error) => { 
             console.error('Error fetching like:', error); 
             setIsLike(true);
-            setLikeCount(likeCount + 1);
+            setLikeCount(likeCount);
         });
       } else if (is_like === false){
         setLikeCount(likeCount + 1);
@@ -95,7 +96,7 @@ const ChapterDetail = () => {
         LikeService.likeChapter(chapter.id)
           .catch((error) => { 
             console.error('Error fetching like:', error); 
-            setLikeCount(likeCount - 1);
+            setLikeCount(likeCount);
             setIsLike(false);
         });
       }
@@ -216,8 +217,7 @@ const ChapterDetail = () => {
           <Stack direction="column" style={{ marginBottom: '10px', alignItems: 'center'}}>
             <SeriesThumbnail src={chapter.series.cover} size={1} />
             <Typography variant="h5" sx={{ marginTop: "10px"}}>{chapter.series.title}</Typography>
-            <Typography variant="h6">by {chapter.series.author.username}</Typography>
-            <hr />
+            <Typography variant="subtitle2"><PersonPin /> {chapter.series.author.username}</Typography>
           </Stack>
 
         

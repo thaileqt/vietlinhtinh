@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { IconButton, Avatar, Stack } from '@mui/material';
-import { Search } from '@mui/icons-material';
+import { PermContactCalendarOutlined, Search } from '@mui/icons-material';
 import ArrowDropDownOutlinedIcon from '@mui/icons-material/ArrowDropDownOutlined';
 import ArrowDropUpOutlinedIcon from '@mui/icons-material/ArrowDropUpOutlined';
 
@@ -176,11 +176,7 @@ export default function MyNavbar ({ currentUser, logOut }) {
                 }}
               >
                 
-                <Avatar
-                  sx={{ width: 24, height: 24}}
-                  alt="Remy Sharp"
-                  src={currentUser.cover ? currentUser.cover : "/static/images/avatar/1.jpg"}
-                />
+                {/* <PermContactCalendarOutlined sx={{color: 'rgb(233, 233, 233)'}}/> */}
                 <NavDropdown title={currentUser.username} className="navbar-dropdown">
                   <NavDropdown.Item href={paths.profile(currentUser.username)} className="navbar-dropdown-item">Trang cá nhân</NavDropdown.Item>
                   <NavDropdown.Item className="navbar-dropdown-item">Account Settings</NavDropdown.Item>

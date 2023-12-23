@@ -89,7 +89,10 @@ const SeriesDetail = () => {
                     <div className="container">
                         <SeriesInformation series={series} />
                     </div>
-                    <hr />
+                    <hr style={{
+                        backgroundColor: "rgb(100, 0, 50)",
+                    
+                    }}/>
                     
                     <div className="container">
                      <SeriesDetailTabs />

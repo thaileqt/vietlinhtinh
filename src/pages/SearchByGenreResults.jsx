@@ -36,7 +36,7 @@ const [status, setStatus] = useState("all");
   }, [genre]);
 
     const handleSortBy = (event) => {
-        if (event.target.innerText.toLowerCase() === "Tăng dần") {
+        if (event.target.innerText === "Tăng dần") {
             setOrderBy("asc");
             document.getElementById("asc").style.color = "red";
 
@@ -47,11 +47,11 @@ const [status, setStatus] = useState("all");
     }
 
     const handleOrderBy = (event) => {
-        if (event.target.innerText.toLowerCase() === "Mới nhất") {
+        if (event.target.innerText === "Mới nhất") {
             setSortBy("newest");
             // get a tag with id = newest and change its color to red
             document.getElementById("newest").style.color = "red";
-        } else if (event.target.innerText.toLowerCase() === "Xem nhiều") {
+        } else if (event.target.innerText === "Xem nhiều") {
             setSortBy("view");
             document.getElementById("view").style.color = "red";
         } else {
@@ -61,12 +61,15 @@ const [status, setStatus] = useState("all");
     }
 
     const handleStatus = (event) => {
-        if (event.target.innerText.toLowerCase() === "Hoàn thành") {
+        if (event.target.innerText === "Hoàn thành") {
             setStatus("completed");
             document.getElementById("completed").style.color = "red";
-        } else {
+        } else if (event.target.innerText === "Đang tiến hành") {
             setStatus("ongoing");
             document.getElementById("ongoing").style.color = "red";
+        } else {
+            setStatus("all");
+            document.getElementById("all").style.color = "red";
         }
     }
 
@@ -100,7 +103,7 @@ const [status, setStatus] = useState("all");
                 
                 <a><strong>Status</strong></a>
                 <p>
-                    <a id="all" href="#" style={{color: status == "all" ? "red" : "black"}}>Tất cả</a> {" | "}
+                    <a id="all" href="#" style={{color: status == "all" ? "red" : "black"}} onClick={handleStatus}>Tất cả</a> {" | "}
                     <a id="completed" style={{color: status == "completed" ? "red" : "black"}} href="#" onClick={handleStatus}>Hoàn thành</a> {" | "} 
                     <a id="ongoing" href="#" style={{color: status == "ongoing" ? "red" : "black"}} onClick={handleStatus}>Đang tiến hành</a>
                 </p>

@@ -42,9 +42,6 @@ const AddSeriesButton = () => {
 // check whether user is logged in, if not, redirect to login page
 const checkLogin = () => {
   const user = JSON.parse(localStorage.getItem('user'));
-  if (!user) {
-    window.location.href = '/login';
-  }
   return user;
 };
 

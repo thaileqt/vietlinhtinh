@@ -44,7 +44,7 @@ const MessageSection = ({ messages, profile_username }) => {
           <Stack direction="row" spacing={2} >
             {/* Avatar */}
             <Avatar
-              src={message.sender.avatar || defaultAvatar}
+              src={message.sender.avatar || "https://cdn.dribbble.com/users/1463082/screenshots/4325775/__________-1.png"}
               alt={message.sender.username}
               style={{ border: "1px solid #ccc", width: "50px", height: "50px" }}
             />
@@ -126,7 +126,7 @@ const MessageSection = ({ messages, profile_username }) => {
                 <Stack direction="row" spacing={2} padding="15px">
                   {/* Avatar */}
                   <Avatar
-                    src={message.sender.avatar || defaultAvatar}
+                    src={message.sender.avatar || "https://cdn.dribbble.com/users/1463082/screenshots/4325775/__________-1.png"}
                     alt={message.sender.username}
                     style={{ border: "1px solid #ccc", width: "50px", height: "50px" }}
                   />
@@ -138,7 +138,7 @@ const MessageSection = ({ messages, profile_username }) => {
                       <Stack direction="row" width="100%" alignItems="center" justifyContent="space-between" mb={1}>
                         <Typography variant="subtitle1" component="h6">
                           {message.sender.username} {message.sender.roles.map((role, index) => (
-                            <Role name={role.name} key={index} />
+                            (role.name === "ROLE_ADMIN" && <Role name={role.name} key={index} />)
                           ))}
                         </Typography>
                         <Typography variant="subtitle2" component="p">

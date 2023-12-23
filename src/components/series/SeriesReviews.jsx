@@ -66,10 +66,12 @@ export default function SeriesReviews({ reviews, seriesId }) {
 
       <ReviewList reviews={reviews} />
 
-      {isLoggedIn ? (
+      
         <form onSubmit={handleSubmit}>
           <br />
           <h5><strong>Thêm nhận xét</strong></h5>
+          {isLoggedIn ? (
+            <>
           <TextField
             label="Username"
             name="username"
@@ -99,10 +101,13 @@ export default function SeriesReviews({ reviews, seriesId }) {
           <Button variant="contained" color="primary" type="submit">
             Submit Review
           </Button>
+          </>
+          ) : (
+            <Typography variant="body1">
+              Vui lòng đăng nhập để thêm nhận xét
+            </Typography>
+          )}
         </form>
-      ) : (
-        <Typography variant="body1">Please log in to leave a review.</Typography>
-      )}
     </div>
   );
 }

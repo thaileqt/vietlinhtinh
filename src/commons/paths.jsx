@@ -1,7 +1,5 @@
 const paths = {
     home: '/',
-    login: '/login',
-    register: '/register',
     profile(username) {
         return `/profile/${username}`;
     },

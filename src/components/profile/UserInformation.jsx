@@ -5,10 +5,10 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd'; // Icon for Follow bu
 export default function UserInformation({ user }) {
   return (
     <>
-    <Grid container direction="column" alignItems="center" sx={{ border: '1px solid #ccc', borderRadius: '5px' }}>
+    <Grid container direction="column" alignItems="center" sx={{ border: '1px solid rgb(100, 0, 50)', borderRadius: '5px' }}>
       <Grid container>
         <Grid item xs={12}>
-          <Typography variant="h6" sx={{ width: '100%', textAlign: 'center', backgroundColor: "green", color: "white" }}>
+          <Typography variant="h6" sx={{ width: '100%', textAlign: 'center', backgroundColor: "rgb(100, 0, 50)", color: "white" }}>
             Tác giả
           </Typography>
         </Grid>
@@ -16,7 +16,7 @@ export default function UserInformation({ user }) {
         <Grid item xs={12}>
           <Avatar
             alt={user.name}
-            src={user.cover ? user.cover : "https://i.imgur.com/7bIbrYs.png"}
+            src={user.cover || "https://cdn.dribbble.com/users/1463082/screenshots/4325775/__________-1.png"}
             sx={{
               width: 75,
               height: 75,
