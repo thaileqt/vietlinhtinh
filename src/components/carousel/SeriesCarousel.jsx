@@ -2,7 +2,7 @@ import Slider from "react-slick";
 import SeriesThumbnail from "../avatar/SeriesThumbnail";
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
-import { Box, Chip, Typography } from "@mui/material";
+import { Box, Chip, CircularProgress, Typography } from "@mui/material";
 
 import { PropTypes } from "prop-types";
 
@@ -19,13 +19,12 @@ const StyledRating = styled(Rating)({
   '& .MuiRating-iconHover': {
     color: '#ff3d47',
   },
-  
 });
 
 
 
 SeriesCarousel.propTypes = {
-  seriesList: PropTypes.array.isRequired,
+  seriesList: PropTypes.array,
   heading: PropTypes.string.isRequired,
   indexMark: PropTypes.bool,
   showRating: PropTypes.bool,
@@ -92,7 +91,7 @@ export default function SeriesCarousel ({ seriesList, heading, indexMark=false, 
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: seriesList.length >= 8 ? 8 : seriesList.length,
+    slidesToShow: seriesList ? 8 : 1,
     slidesToScroll: 1,
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
@@ -108,13 +107,13 @@ export default function SeriesCarousel ({ seriesList, heading, indexMark=false, 
       </Typography>
       
       <div className="container">
-        
+        {seriesList ? (
         <Slider {...settings}>
           {seriesList.slice(0, 10).map((series, index) => (
             <div className="series-slide" key={series.id}>
               <Box display="flex" flexDirection="column" alignItems="center" textAlign="center" maxWidth="100px" position="relative">
     
-                <SeriesThumbnail src={series.cover} borderRadius={3} width={100} height={140} onHover={true}
+                <SeriesThumbnail src={series.cover} borderRadius={3} size={1} onHover={true}
                     handleImageClick={() => {window.location.href = paths.series(series.slug)}}/>
                 {indexMark===true && (
                     <Typography
@@ -140,10 +139,11 @@ export default function SeriesCarousel ({ seriesList, heading, indexMark=false, 
                 {showChapterCount==true && (<Typography variant="body2" color="text.secondary" sx={{marginBottom: "5px"}}>({series.totalChapter} chương)</Typography>)}
                 {showRating==true && (
                     <StyledRating
-                    readOnly
+                      readOnly
+                      sx={{margin: "5px 0"}}
                       name="customized-color"
-                      defaultValue={2.5}
-                      getLabelText={(value) => `${value} Heart${value !== 1 ? 's' : ''}`}
+                      defaultValue={series.averageRating ? series.averageRating : 0}
+                      // getLabelText={(value) => `${value} Heart${value !== 1 ? 's' : ''}`}
                       precision={0.5}
                       size="small"
                       icon={<StarRate fontSize="inherit" />}
@@ -160,12 +160,19 @@ export default function SeriesCarousel ({ seriesList, heading, indexMark=false, 
                   },
                   }}
                   onClick={() => {window.location.href = paths.series(series.slug)}}
-                  ><strong>{series.title}</strong></Typography>
+                  ><strong> 
+                  {series.title.length > 20 ? series.title.substring(0, 20) + "..." : series.title}
+                    </strong></Typography>
                 
               </Box>
             </div>
           ))}
         </Slider>
+        ) : (
+          <Box sx={{ display: 'flex' }}>
+            <CircularProgress />
+          </Box>
+        )}
       </div>
       <br />
     </div>

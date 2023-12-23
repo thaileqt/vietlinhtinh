@@ -4,9 +4,11 @@ const API_URL = request_utils.host + "/api/series";
 
 const SeriesService = {
     getSeriesBySlug: (slug) => request_utils.handleGetRequest(API_URL + "/" + slug),
+    getSeriesByUsername: (username, page, size) => request_utils.handleGetRequest(API_URL + "/get-by-username/" + username + `?page=${page}&&size=${size}`),
     getHotSeries: (seriesCount) => request_utils.handleGetRequest(API_URL + "/get-hot-series/" + seriesCount),
+    getRecentCreatedSeries: (page, size) => request_utils.handleGetRequest(API_URL + "/get-recent-created-series?page=" + page + "&&size=" + size),
     getSeriesByGenre: (genre) => request_utils.handleGetRequest(API_URL + "/get-by-genre/" + genre),
-    getTopRecentUpdatedSeries: (page) => request_utils.handleGetRequest(API_URL + "/get-recent-updated-series?page=" + page),
+    getTopRecentUpdatedSeries: (page, size) => request_utils.handleGetRequest(API_URL + "/get-recent-updated-series?page=" + page + "&&size=" + size),
     searchSeries: (keyword) => request_utils.handleGetRequest(API_URL + "/search?keyword=" + keyword),
     getUserOwnedSeries: (username, page, size) => request_utils.handleGetRequest(API_URL + "/get-user-owned-series/" + username + "?page=" + page + "&&size=" + size),
     countUserOwnedSeries: (username) => request_utils.handleGetRequest(API_URL+ "/count-user-owned-series/" + username),

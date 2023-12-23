@@ -20,7 +20,7 @@ export default function SeriesSection({profile_username}) {
 
  
   useEffect(() => {
-    SeriesService.getUserOwnedSeries(profile_username, page-1, size)
+    SeriesService.getSeriesByUsername(profile_username, page, size)
     .then(
       (response) => {setSeriesList(response.data);},
       (error) => {console.log(error);}
@@ -32,9 +32,9 @@ export default function SeriesSection({profile_username}) {
     );
 }, [page, size]);
 
-  const handleChange = (event, value) => {
+  const handlePageChange = (event, value) => {
     setPage(value);
-    SeriesService.getUserOwnedSeries(profile_username, value-1, size)
+    SeriesService.getUserOwnedSeries(profile_username, value, size)
     .then(
       (response) => {setSeriesList(response.data);},
       (error) => {console.log(error);}
@@ -51,7 +51,7 @@ export default function SeriesSection({profile_username}) {
                         <SeriesListItem key={index} series={series} />
                     ))}
                 </List>
-                {totalPages > 1 ? <Pagination count={totalPages} variant="outlined" shape="rounded" onChange={handleChange} /> : null}
+                {totalPages > 1 ? <Pagination count={totalPages} variant="outlined" shape="rounded" onChange={handlePageChange} /> : null}
             </div>
             ) : (
                 "Người dùng này chưa đăng bộ truyện nào."

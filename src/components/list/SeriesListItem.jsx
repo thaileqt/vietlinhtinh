@@ -28,7 +28,7 @@ const SeriesListItem = ({ series }) => {
                 </Typography>
               </Box>
               <Typography variant="caption" color="textSecondary">
-                {series.totalView} views | {series.totalLike} likes | {series.totalChapter} chapters
+                {series.totalViews} views | {series.totalLikes} likes | {series.totalChapters} chapters | {series.totalReviews} reviews
               </Typography>
               <Typography variant="caption" color="textSecondary">
                 {series.genres.map((genre) => genre.name).join(", ")}

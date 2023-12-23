@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { List, ListItem, ListItemSecondaryAction, ListItemText, Pagination } from "@mui/material";
+import { CircularProgress, List, ListItem, ListItemSecondaryAction, ListItemText, Pagination } from "@mui/material";
 
 import ChapterService from "../../services/chapter.service";
 import PropTypes from "prop-types";
@@ -16,12 +16,12 @@ export default function ChapterList({ slug }) {
     
     // Your code here
     
-    const [chapters, setChapters] = React.useState([]);
+    const [chapters, setChapters] = React.useState(null);
     const [totalPages, setTotalPages] = React.useState(null);
     const size = 20
 
     React.useEffect(() => {
-        ChapterService.getChaptersBySeriesSlug(slug, 0, size)
+        ChapterService.getChaptersBySeriesSlug(slug, 1, size)
             .then((response) => {
                 setChapters(response.data);
             })
@@ -48,7 +48,7 @@ export default function ChapterList({ slug }) {
     // };
 
     const handlePageChange = (event, value) => {
-        ChapterService.getChaptersBySeriesSlug(slug, value-1, size).then(
+        ChapterService.getChaptersBySeriesSlug(slug, value, size).then(
           (response) => {
               setChapters(response.data);
           },
@@ -72,10 +72,10 @@ export default function ChapterList({ slug }) {
             border: "1px solid #ccc",
             borderRadius: "5px",
             }}>
-            {chapters.length > 0 ? (
+            {chapters ? (
                 <List>
-                    {chapters.map((chapter, index) => (
-                        <ListItem button component={Link} to={paths.chapter(slug, index+1)} key={chapter.id}>
+                    {chapters.map((chapter) => (
+                        <ListItem button component={Link} to={paths.chapter(slug, chapter.chapterNumber)} key={chapter.id}>
                             <ListItemText   
                                 primary={chapter.title ? chapter.title : "Chương " + chapter.chapterNumber}
                             />
@@ -89,7 +89,7 @@ export default function ChapterList({ slug }) {
                     ))}
                 </List>
             ) : (
-                <div style={{ padding: "20px" }}>Chưa có chương nào</div>
+                <CircularProgress />
             )}
             </div>
             {(totalPages && totalPages > 0) && <Pagination count={totalPages} variant="outlined" shape="rounded" onChange={handlePageChange} 

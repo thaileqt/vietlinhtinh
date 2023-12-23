@@ -16,13 +16,14 @@ export default function UserInformation({ user }) {
         <Grid item xs={12}>
           <Avatar
             alt={user.name}
-            src={user.avatar}
+            src={user.cover ? user.cover : "https://i.imgur.com/7bIbrYs.png"}
             sx={{
               width: 75,
               height: 75,
               margin: 'auto',
               marginTop: '10px',
               marginBottom: '10px',
+              border: '1px solid #ccc',
             }}
           />
         </Grid>

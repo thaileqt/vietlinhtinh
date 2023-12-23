@@ -8,37 +8,45 @@ import RecentUpdatedSeries from "../components/list/RecentUpdatedSeries";
 
 
 const Home = () => {
-  const [hotSeries, setHotSeries] = useState([]);
-  const [latestSeriesList, setLatestSeriesList] = useState([]);
+  const [hotSeries, setHotSeries] = useState(null);
+  const [recentUpdatedSeries, setRecentUpdatedSeries] = useState(null);
+  const [latestSeriesList, setLatestSeriesList] = useState(null);
+  const recentUpdatedSeriesSize = 20
   
 
   useEffect(() => {
-    SeriesService.getHotSeries(10).then(
-      (response) => {setHotSeries(response.data)},
+    Promise.all([
+      SeriesService.getHotSeries(10),
+      SeriesService.getTopRecentUpdatedSeries(1, recentUpdatedSeriesSize),
+      SeriesService.getRecentCreatedSeries(1, 10),
+    ]).then(([hotSeriesResponse, recentUpdatedSeriesResponse, latestSeriesResponse]) => {
+      setHotSeries(hotSeriesResponse.data);
+      setRecentUpdatedSeries(recentUpdatedSeriesResponse.data);
+      setLatestSeriesList(latestSeriesResponse.data);
+    }).catch(error => {
+      // Handle errors for both requests
+      console.error('Error fetching series:', error);
+    });
+  }, []);
+
+  
+
+
+  const handlePageChange = (event, value) => {
+    SeriesService.getTopRecentUpdatedSeries(value, recentUpdatedSeriesSize).then(
+      (response) => {
+          setRecentUpdatedSeries(response.data);
+      },
       (error) => {
-        const _content =
-          (error.response && error.response.data) ||
-          error.message ||
-          error.toString();
-        setHotSeries(_content);
+          const errorMessage =
+              (error.response && error.response.data) ||
+              error.message ||
+              error.toString();
+          console.error('Error fetching recent updated series:', errorMessage);
+          // Handle errors accordingly
       }
     );
-      // Fetch recent updated series from UserService
-    SeriesService.getTopRecentUpdatedSeries(0).then(
-        (response) => {
-            setLatestSeriesList(response.data);
-        },
-        (error) => {
-            const errorMessage =
-                (error.response && error.response.data) ||
-                error.message ||
-                error.toString();
-            console.error('Error fetching recent updated series:', errorMessage);
-            // Handle errors accordingly
-        }
-    );
-
-  }, []);
+  };
 
   // Configuration for the carousel
   // const responsive = {
@@ -69,11 +77,13 @@ const Home = () => {
       </div>
 
       <div>
-        <RecentUpdatedSeries />
+        
+        <RecentUpdatedSeries seriesList={recentUpdatedSeries} handlePageChange={handlePageChange} />
       </div>
       
       <div>
-        <SeriesCarousel seriesList={latestSeriesList} heading={"Mới ra mắt"} />
+        
+         <SeriesCarousel seriesList={latestSeriesList} heading={"Mới ra mắt"} />
       </div>
       
     </div>

@@ -23,6 +23,9 @@ const MyBreadcrumb = ({items}) => {
   } else if (pathnames[0] === "genre") {
     pathnames[0] = "Thể loại";
     breadcrumb.push("Thể loại")
+  } else if (pathnames[0] == "compose") {
+    pathnames[0] = "Soạn truyện";
+    breadcrumb.push("Soạn truyện")
   }
   for (let i = 0; i < items.length; i++) {
     breadcrumb.push(items[i]);

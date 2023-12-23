@@ -14,7 +14,15 @@ export default function ContentRender({ chapterContent,  lineSpacing, marker, to
   
 
     return (
-      <div className="series-reader-container">
+
+      
+      <div className="series-reader-container" // max-width: 800px; margin: 0 auto; padding: 0 20px;
+      style={{
+        maxWidth: '1200px',
+        margin: '0 auto',
+        padding: '0 20px',
+      }}
+      >
         {/* <div className='title' ref={chapterTitleRef}>
           <h2 className="title">Chương {chapterNumber} </h2>
           <h2>{chapterTitle}</h2>

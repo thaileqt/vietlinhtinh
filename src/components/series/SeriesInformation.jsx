@@ -1,6 +1,6 @@
 // SeriesInformation.js
 import { Link } from "react-router-dom";
-import { Typography, Grid, ListItemAvatar } from "@mui/material";
+import { Typography, Grid, ListItemAvatar, Rating, Stack } from "@mui/material";
 import GenreIcon from '@mui/icons-material/Category';
 import ChapterIcon from '@mui/icons-material/LibraryBooks';
 import StatusIcon from '@mui/icons-material/Info';
@@ -21,51 +21,55 @@ export default function SeriesInformation({ series }) {
     <div className="row">
       {series && (
         <Grid container alignItems="flex-start">
-          <ListItemAvatar sx={{marginRight: "20px"}}>
-            <SeriesThumbnail src={series.cover} size={2} shadow={true} />
-          </ListItemAvatar>
+          <Stack direction="row">
+            <ListItemAvatar sx={{marginRight: "20px"}}>
+              <SeriesThumbnail src={series.cover} size={2} shadow={true} />
+            </ListItemAvatar>
 
-            <Grid>
-              <Typography variant="h4"><p>{series.title}</p></Typography>
-              <p>
-                {series.genres.map((element) => (
-                  <Link to="#" key={element}>
-                    <Genre name={element} color="white" backgroundColor="rgb(62, 82, 122)" />
-                  </Link>
-                ))}
-              </p>
-              <Grid container spacing={3} alignItems="center">
-                <Grid item>
-                  <VisibilityIcon fontSize="small" />
-                  <Typography variant="body1" component="span" ml={1}>
-                    {series.totalView}
-                  </Typography>
-                </Grid>
+              <Grid>
+                <Typography variant="h4"><p>{series.title}</p></Typography>
+                <Rating name="read-only" value={series.averageRating ? series.averageRating : 0} readOnly />
+                <p>
+                  {series.genres.map((genre) => (
+                    <Link to="#" key={genre.id}>
+                      <Genre name={genre.name} color="white" backgroundColor="rgb(62, 82, 122)" />
+                    </Link>
+                  ))}
+                </p>
+                <Grid container spacing={3} alignItems="center">
+                  <Grid item>
+                    <VisibilityIcon fontSize="small" />
+                    <Typography variant="body1" component="span" ml={1}>
+                      {series.totalViews}
+                    </Typography>
+                  </Grid>
 
-                <Grid item>
-                <Favorite fontSize="small" />
-                  <Typography variant="body1" component="span" ml={1}>{series.totalLike}</Typography>
+                  <Grid item>
+                  <Favorite fontSize="small" />
+                    <Typography variant="body1" component="span" ml={1}>{series.totalLikes}</Typography>
+                  </Grid>
+                  
+                  <Grid item>
+                    <ChapterIcon fontSize="small" />
+                    <Typography variant="body1" component="span" ml={1}>
+                      {series.totalChapters}
+                    </Typography>
+                  </Grid>
                 </Grid>
-                
-                <Grid item>
-                  <ChapterIcon fontSize="small" />
+                <p>
+                  <StatusIcon fontSize="small" />
                   <Typography variant="body1" component="span" ml={1}>
-                    {series.totalChapter}
-                  </Typography>
-                </Grid>
+                  {series.seriesState.name === "ONGOING"
+                    ? "Đang tiến hành"
+                    : "Kết thúc"}
+                    </Typography>
+                  
+                </p> 
               </Grid>
-              <p>
-                <StatusIcon fontSize="small" />
-                <Typography variant="body1" component="span" ml={1}>
-                {series.seriesState === "ONGOING"
-                  ? "Đang tiến hành"
-                  : "Kết thúc"}
-                  </Typography>
-                
-              </p> 
-            </Grid>
-          {/* </div> */}
-        </Grid>
+            {/* </div> */}
+            </Stack>
+          </Grid>
+        
       )}
       
     </div>

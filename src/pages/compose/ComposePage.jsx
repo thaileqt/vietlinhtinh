@@ -57,7 +57,7 @@ const ComposePage = () => {
 
   // Fetch series to display in the "Add Chapter" dropdown
   useEffect(() => {
-      SeriesService.getUserOwnedSeries(user.username, page-1, size)
+      SeriesService.getSeriesByUsername(user.username, page, size)
         .then((response) => {
           setSeries(response.data);
         })
@@ -75,7 +75,7 @@ const ComposePage = () => {
 
   const handlePageChange = (event, value) => {
     setPage(value);
-    SeriesService.getUserOwnedSeries(user.username, value-1, size)
+    SeriesService.getUserOwnedSeries(user.username, value, size)
         .then((response) => {
           setSeries(response.data);
         })
@@ -86,7 +86,7 @@ const ComposePage = () => {
 
   return (
     <div className="container-fluid">
-      <MyBreadcrumb />
+      <MyBreadcrumb items={[""]} />
       <div>
 
         <AddSeriesButton />

@@ -193,7 +193,7 @@ export default function MyNavbar ({ currentUser, logOut }) {
                   handleMenuClose={handleMenuClose} 
                   handleMenuOpen={handleMenuOpen}/>
 
-                <TransparentButton name="Create" color="rgb(233, 233, 233)" onClick={() => navigate(paths.compose.composePage())}/>
+                <TransparentButton name="Viết" color="rgb(233, 233, 233)" onClick={() => navigate(paths.compose.composePage())}/>
                 
               </Stack>
             ) : (

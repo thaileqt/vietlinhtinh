@@ -4,7 +4,7 @@ import { useRef } from 'react';
 // Compoenents
 import CommentSection from '../components/chapter/CommentSection';
 import ContentRender from '../components/chapter/ContentRender';
-import { FavoriteBorderOutlined, FavoriteOutlined, Visibility } from '@mui/icons-material';
+import { CommentOutlined, FavoriteBorderOutlined, FavoriteOutlined, Visibility } from '@mui/icons-material';
 import SeriesThumbnail from '../components/avatar/SeriesThumbnail';
 import ChapterConfig from '../components/chapter/ChapterConfig';
 // Services
@@ -25,8 +25,7 @@ const ChapterDetail = () => {
     const user = AuthService.getCurrentUser();
     let { slug, chapterNumber } = useParams(); // Get the ID parameter from the URL
     
-    const [series, setSeries] = useState(null);
-    const [chapter, setChapter] = useState([]);
+    const [chapter, setChapter] = useState(null);
     const [nextChapter, setNextChapter] = useState(null);
     const [prevChapter, setPrevChapter] = useState(null);
     const seriesReaderRef = useRef(null);
@@ -45,12 +44,6 @@ const ChapterDetail = () => {
     
 
     useEffect(() => {
-      SeriesService.getSeriesBySlug(slug) // Fetch the details of the specific series
-        .then((response) => { setSeries(response.data); }) 
-        .catch((error) => { console.error('Error fetching series details:', error); });
-
-
-
       ChapterService.getChapterAndAdjacentChapters(slug, chapterNumber)
         .then((response) => {
             for (let i = 0; i < response.data.length; i++) {
@@ -201,11 +194,11 @@ const ChapterDetail = () => {
 
   return (
     <div style={{ minHeight: "100vh" }}>  
-      {(series && chapter && is_like !== null) ? (
+      {(chapter && is_like !== null) ? (
         <div>
-            <MyBreadcrumb items={[series.title, chapter.title]}  />
+          <MyBreadcrumb items={[chapter.series.title, chapter.title]}  />
           <ChapterConfig 
-            seriesId={series.id}
+            seriesId={chapter.series.id}
             showSettings={showSettings} 
             setShowSettings={setShowSettings} 
             chapter={chapter}
@@ -221,9 +214,9 @@ const ChapterDetail = () => {
             setFontSize={setFontSize}
           />
           <Stack direction="column" style={{ marginBottom: '10px', alignItems: 'center'}}>
-            <SeriesThumbnail src={series.cover} size={1} />
-            <Typography variant="h5" sx={{ marginTop: "10px"}}>{series.title}</Typography>
-            <Typography variant="h6">by {series.author.username}</Typography>
+            <SeriesThumbnail src={chapter.series.cover} size={1} />
+            <Typography variant="h5" sx={{ marginTop: "10px"}}>{chapter.series.title}</Typography>
+            <Typography variant="h6">by {chapter.series.author.username}</Typography>
             <hr />
           </Stack>
 
@@ -235,28 +228,25 @@ const ChapterDetail = () => {
                 alignItems: 'center',
             }}>
 
-                {/* Row 2 */}
-                <div style={{ marginBottom: '10px' }}>
                   <h2>{chapter.title}</h2>
-                </div>
 
                 {/* Row 3 */}
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', marginRight: '10px' }}>
-                    <Visibility style={{ fontSize: '18px' }} />
-                    <p style={{ marginLeft: '5px' }}>
-                      {chapter.viewCount ? " " + chapter.viewCount : 0}
-                    </p>
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: "20px"}}>
+                  <div style={{ display: 'flex', alignItems: 'center', margin: "0 10px"}}>
+                    <Visibility style={{ fontSize: '18px', margin: "0 5px" }} />
+                      {chapter.viewCount ? chapter.viewCount : 0}
                   </div>
-                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', margin: "0 10px" }}>
                     {is_like ? (
-                      <FavoriteOutlined style={{ fontSize: '18px' }} onClick={handleFavoriteClick}/>
+                      <FavoriteOutlined style={{ fontSize: '18px', margin: "0 5px" }} onClick={handleFavoriteClick}/>
                     ) : (
-                      <FavoriteBorderOutlined style={{ fontSize: '18px' }} onClick={handleFavoriteClick}/>
+                      <FavoriteBorderOutlined style={{ fontSize: '18px', marginRight: "5px"  }} onClick={handleFavoriteClick}/>
                     )}
-                    <p style={{ marginLeft: '5px' }}>
-                      {likeCount ? " " + likeCount : 0}
-                    </p>
+                      {likeCount ? likeCount : 0}
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', margin: "0 10px"}}>
+                    <CommentOutlined style={{ fontSize: '18px', margin: "0 5px" }} />
+                      {chapter.comments.length ? chapter.comments.length : 0}
                   </div>
                 </div>
               </div>

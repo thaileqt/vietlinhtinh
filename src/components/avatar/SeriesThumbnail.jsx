@@ -29,6 +29,7 @@ const SeriesThumbnail = ({ src, size, borderRadius, shadow, onHover=false, handl
               style={{
                 width:  `${w}px`,
                 height: `${h}px`,
+                // set object fit to fully cover the container (if not, it will be stretched)
                 objectFit: "cover",
                 borderRadius: borderRadius ? `${borderRadius}px` : "0px",
                 boxShadow: shadow ? "0px 0px 10px 0px rgba(0, 0, 0, 0.9)" : "none",

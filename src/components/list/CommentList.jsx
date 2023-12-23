@@ -6,7 +6,7 @@ import { PropTypes } from "prop-types";
 
 export default function CommentList({comments}) {
   CommentList.propTypes = {
-    comments: PropTypes.array.isRequired
+    comments: PropTypes.array
   }
   return (
     <div>

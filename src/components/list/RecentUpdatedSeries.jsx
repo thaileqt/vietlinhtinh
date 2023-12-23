@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Pagination from '@mui/material/Pagination';
-import { Box, Typography, List, ListItem, Grid, ListItemSecondaryAction, ListItemAvatar, ListItemText, Stack} from '@mui/material';
-import SeriesService from '../../services/series.service';
+import { Box, Typography, Stack, CircularProgress, Link} from '@mui/material';
 import SeriesThumbnail from '../avatar/SeriesThumbnail';
 import Genre from '../misc/Genre';
 import "../../styles/RecentUpdatedSeries.css";
@@ -11,25 +10,17 @@ import PropsType from 'prop-types';
 
 
 
-function RecentSeriesList({recentUpdatedSeries}) {
+function RecentSeriesList({ seriesList }) {
     RecentSeriesList.propTypes = {
-        recentUpdatedSeries: PropsType.array.isRequired,
+        seriesList : PropsType.array,
     };
     const [hoveredIndex, setHoveredIndex] = React.useState(null);
-  
-    const handleMouseEnter = (index) => {
-      setHoveredIndex(index);
-    };
-  
-    const handleMouseLeave = () => {
-      setHoveredIndex(null);
-    };
   
     return (
       <div className="recent-series-container">
         <div className="section-header">Mới cập nhật</div>
         
-          {recentUpdatedSeries.map((series, index) => (
+          {seriesList ? seriesList.map((series, index) => (
             <Stack key={series.id} direction="row" 
                   className={`list-item ${
                     index % 2 === 0 ? "even-item" : "odd-item"
@@ -67,22 +58,35 @@ function RecentSeriesList({recentUpdatedSeries}) {
                       variant="body1"
                       color={hoveredIndex === index ? "secondary" : "text.primary"}
                     >
-                      {series.genres ? series.genres.map((element) => (
+                      {series.genres ? series.genres.map((genre) => (
                             // <a key={element}> {mapper.genre_name_mapper[element]} {element === series.genres[series.genres.length - 1] ? "" : "-"}</a>
-                            <Genre name={element} key={element} color="black" borderRadius='3px' border="1px solid rgb(191, 191, 191)" />
+                            <Genre name={genre.name} key={genre.id} color="black" borderRadius='3px' border="1px solid rgb(191, 191, 191)" />
                           )) : ""}
                     </Typography>
-                    <Typography
-                      component="span"
-                      variant="body1"
-                      color={hoveredIndex === index ? "secondary" : "text.primary"}
-                    >
-                      Chương {series.totalChapter}
-                    </Typography>
+                    {/* <Link to={paths.chapter(series.slug, series.chapterNumber)}> */}
+                      <Typography
+                        component="span"
+                        variant="body1"
+                        color={hoveredIndex === index ? "secondary" : "text.primary"}
+                        onClick={() => {window.location.href=paths.chapter(series.slug, series.chapterNumber)}}
+                        // on hover
+                        sx={{
+                          color: hoveredIndex === index ? "red" : "black",
+                          '&:hover': {
+                            color: "blue",
+                            cursor: "pointer",
+                          },
+                        }}
+                      >
+                      {series.chapterTitle}
+                      </Typography>
+                    {/* </Link> */}
                   </Stack>
                 </Stack>
 
-                <Stack direction="column" justifyContent="flex-end"
+                <Stack direction="column" justifyContent="flex-end" // right align
+                  alignItems="flex-end" // right align
+                  paddingRight="10px"
                 >
                   <Typography
                     component="span"
@@ -93,7 +97,8 @@ function RecentSeriesList({recentUpdatedSeries}) {
 
                   <Typography
                     component="span"
-                    variant="subtitle2"   
+                    variant="subtitle2"  // flex end
+                    // on hover  
                   >
                     by <Typography
                       component="span"
@@ -114,56 +119,11 @@ function RecentSeriesList({recentUpdatedSeries}) {
                     </Typography>
                   </Typography>
                 </Stack>
-
-
-             
-              
-              {/* <ListItem key={series.id}
-                alignItems="flex-start"
-               
-                onClick={() => {
-                  window.location.href = paths.series(series.slug);
-                }}
-                onMouseEnter={() => handleMouseEnter(index)}
-                onMouseLeave={handleMouseLeave}
-                
-       
-              >
-                
-                <ListItemText
-                  primary={
-                    <Typography
-                      component="span"
-                      variant="body1"
-                      color={hoveredIndex === index ? "secondary" : "text.primary"}
-                    >
-                      {series.title}
-                    </Typography>
-                  }
-                  secondary={
-                    <React.Fragment>
-                      {series.genres ? series.genres.map((element) => (
-                        // <a key={element}> {mapper.genre_name_mapper[element]} {element === series.genres[series.genres.length - 1] ? "" : "-"}</a>
-                        <Genre name={element} key={element} />
-                      )) : ""}
-                      <br />
-                      <Typography
-                        sx={{ display: 'inline' }}
-                        component="span"
-                        variant="body2"
-                        color="text.primary"
-                      >
-                        Chương {series.totalChapter}
-                      </Typography>
-                      {"\t(" + utils.timeSince(series.updatedDate) + ")"}
-                    </React.Fragment>
-                  }
-                />
-              
- 
-              </ListItem>  */}
               </Stack>    
-          ))}
+          )): (
+            <CircularProgress />
+          
+          )}
         
       </div>
     );
@@ -171,49 +131,20 @@ function RecentSeriesList({recentUpdatedSeries}) {
     
   
 
-export default function RecentUpdatedSeries() {
-    const [recentUpdatedSeries, setRecentUpdatedSeries] = React.useState([]);
-
-    React.useEffect(() => {
-        // Fetch recent updated series from UserService
-        SeriesService.getTopRecentUpdatedSeries(0).then(
-            (response) => {
-                setRecentUpdatedSeries(response.data);
-            },
-            (error) => {
-                const errorMessage =
-                    (error.response && error.response.data) ||
-                    error.message ||
-                    error.toString();
-                console.error('Error fetching recent updated series:', errorMessage);
-                // Handle errors accordingly
-            }
-        );
-    }, []);
-
-    const handleChange = (event, value) => {
-      SeriesService.getTopRecentUpdatedSeries(value-1).then(
-        (response) => {
-            setRecentUpdatedSeries(response.data);
-        },
-        (error) => {
-            const errorMessage =
-                (error.response && error.response.data) ||
-                error.message ||
-                error.toString();
-            console.error('Error fetching recent updated series:', errorMessage);
-            // Handle errors accordingly
-        }
-      );
-    };
+export default function RecentUpdatedSeries({ seriesList, handlePageChange }) {
+  RecentUpdatedSeries.propTypes = {
+    seriesList : PropsType.array,
+    handlePageChange : PropsType.func,
+  };
+   
 
   return (
     <>
-        <RecentSeriesList recentUpdatedSeries={recentUpdatedSeries} />
+        <RecentSeriesList seriesList={seriesList} />
         <Box display="flex" justifyContent="center" mt={2}>
             {/* <Stack spacing={2}> */}
             {/* <Pagination count={10} shape="rounded" /> */}
-        <Pagination count={10} variant="outlined" shape="rounded" onChange={handleChange} 
+        <Pagination count={10} variant="outlined" shape="rounded" onChange={handlePageChange} 
                 style={{
                     display: 'flex',
                     alignItems: 'center',
