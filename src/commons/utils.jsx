@@ -4,6 +4,7 @@ const genre_name_mapper = {
     "ADVENTURE" : "Phiêu Lưu",
     "COMEDY": "Hài Hước",
     "DRAMA": "Drama",
+    "BOYS_LOVE": "Đam Mỹ",
     "DOUJINSHI" : "Doujinshi",
     "ECCHI": "Ecchi",
     "FANFICTION": "Fanfiction",
@@ -50,31 +51,32 @@ function timeSince(date) {
     const seconds = Math.floor((new Date() - new Date(date)) / 1000);
     
     let interval = Math.floor(seconds / 31536000);
+    
     if (interval >= 1) {
         return `${interval} year${interval === 1 ? '' : 's'} ago`;
     }
     
     interval = Math.floor(seconds / 2592000);
     if (interval >= 1) {
-        return `${interval} month${interval === 1 ? '' : 's'} ago`;
+        return `${interval} tháng trước`;
     }
     
     interval = Math.floor(seconds / 86400);
     if (interval >= 1) {
-        return `${interval} day${interval === 1 ? '' : 's'} ago`;
+        return `${interval} ngày trước`;
     }
     
     interval = Math.floor(seconds / 3600);
     if (interval >= 1) {
-        return `${interval} hour${interval === 1 ? '' : 's'} ago`;
+        return `${interval} giờ trước`;
     }
     
     interval = Math.floor(seconds / 60);
     if (interval >= 1) {
-        return `${interval} minute${interval === 1 ? '' : 's'} ago`;
+        return `${interval} phút trước`;
     }
     
-    return 'Just now';
+    return 'Mới cập nhật';
 }
 
 

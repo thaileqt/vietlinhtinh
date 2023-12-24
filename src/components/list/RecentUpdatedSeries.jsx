@@ -14,8 +14,6 @@ function RecentSeriesList({ seriesList }) {
     RecentSeriesList.propTypes = {
         seriesList : PropsType.array,
     };
-    const [hoveredIndex, setHoveredIndex] = React.useState(null);
-  
     return (
       <div className="recent-series-container">
         <div className="section-header">Mới cập nhật</div>
@@ -38,10 +36,8 @@ function RecentSeriesList({ seriesList }) {
                       component="span"
                       variant="body1"
                       textAlign="left"
-                      color={hoveredIndex === index ? "secondary" : "text.primary"}
                       // on hover
                       sx={{
-                        color: hoveredIndex === index ? "red" : "black",
                         '&:hover': {
                           color: "red",
                           cursor: "pointer",
@@ -56,7 +52,6 @@ function RecentSeriesList({ seriesList }) {
                     <Typography
                       component="span"
                       variant="body1"
-                      color={hoveredIndex === index ? "secondary" : "text.primary"}
                     >
                       {series.genres ? series.genres.map((genre) => (
                             // <a key={element}> {mapper.genre_name_mapper[element]} {element === series.genres[series.genres.length - 1] ? "" : "-"}</a>
@@ -67,13 +62,11 @@ function RecentSeriesList({ seriesList }) {
                       <Typography
                         component="span"
                         variant="body1"
-                        color={hoveredIndex === index ? "secondary" : "text.primary"}
                         onClick={() => {window.location.href=paths.chapter(series.slug, series.chapterNumber)}}
                         // on hover
                         sx={{
-                          color: hoveredIndex === index ? "red" : "black",
                           '&:hover': {
-                            color: "blue",
+                            color: "red",
                             cursor: "pointer",
                           },
                         }}
@@ -92,7 +85,7 @@ function RecentSeriesList({ seriesList }) {
                     component="span"
                     variant="subtitle2"   
                   >
-                    {"\t" + utils.timeSince(series.updatedDate)}
+                    {"\t" + utils.timeSince(series.updatedAt)}
                   </Typography>
 
                   <Typography
@@ -104,7 +97,6 @@ function RecentSeriesList({ seriesList }) {
                       component="span"
                       variant="body2"
                       textAlign="left"
-                      color={hoveredIndex === index ? "secondary" : "text.primary"}
                       // on hover
                       sx={{
                         color: "#3f51b5",

@@ -27,7 +27,7 @@ const SimilarSeries = ({ seriesList }) => {
         color: 'white',
         textAlign: 'center',
         backgroundColor: 'black',
-      }}>Truyện tương tự</h6>
+      }}>Truyện tương tự (developing)</h6>
       
       {seriesList.map((series, index) => (
           <ListItem key={index} alignItems="flex-start" >

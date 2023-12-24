@@ -45,7 +45,7 @@ export default function RegistrationForm({ setRegistrationForm, registrationForm
         borderRadius: '3px',
         color: 'white',
         fontFamily: 'Arial, sans-serif',
-        width: '220px', // Width of the form
+        width: '260px', // Width of the form
       }}
       ref={registrationFormRef}
     >
@@ -53,7 +53,7 @@ export default function RegistrationForm({ setRegistrationForm, registrationForm
       <form>
         {/* Username Input */}
         <TextField
-          label="Username"
+          label="Tên đăng nhập"
           variant="standard"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
@@ -92,7 +92,7 @@ export default function RegistrationForm({ setRegistrationForm, registrationForm
 
         {/* Password Input */}
         <TextField
-          label="Password"
+          label="Mật khẩu"
           type="password"
           variant="standard"
           value={password}
@@ -112,7 +112,7 @@ export default function RegistrationForm({ setRegistrationForm, registrationForm
 
         {/* Confirm Password Input */}
         <TextField
-          label="Confirm Password"
+          label="Nhập lại mật khẩu"
           type="password"
           variant="standard"
           value={confirmPassword}
@@ -133,7 +133,7 @@ export default function RegistrationForm({ setRegistrationForm, registrationForm
         {/* Checkbox for Terms */}
         <FormControlLabel
           control={<Checkbox color="primary" />}
-          label="I agree to the terms and conditions"
+          label="Tôi đồng ý với các điều khoản của VietLinhTinh"
           sx={{ color: 'white', fontSize: '14px', marginBottom: '15px' }}
         />
 
@@ -159,7 +159,7 @@ export default function RegistrationForm({ setRegistrationForm, registrationForm
             }}
             onClick={handleRegistration}
           >
-            Register
+            Đăng ký
           </Button>
         </div>
       </form>

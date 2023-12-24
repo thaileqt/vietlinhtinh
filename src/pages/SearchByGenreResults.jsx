@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import { List, ListItem, Grid, ListItemText, ListItemSecondaryAction, Typography, ListItemAvatar } from "@mui/material";
+import { List, ListItem, Grid, ListItemText, ListItemSecondaryAction, Typography, ListItemAvatar, Stack, Rating, CircularProgress } from "@mui/material";
 import Genre from "../components/misc/Genre";
 
 import utils from "../commons/utils";
@@ -13,11 +13,12 @@ import MyBreadcrumb from "../components/layout/Breadcrumb";
 
 
 export default function SearchByGenreResults() {
-  const [series, setSeries] = useState([]);
+  const [series, setSeries] = useState(null);
   const {genre} = useParams()
   const [sortBy, setSortBy] = useState("newest");
 const [orderBy, setOrderBy] = useState("asc");
 const [status, setStatus] = useState("all");
+const [hoveredIndex, setHoveredIndex] = React.useState(null);
 
   useEffect(() => {
     SeriesService.getSeriesByGenre(genre).then(
@@ -108,72 +109,115 @@ const [status, setStatus] = useState("all");
                     <a id="ongoing" href="#" style={{color: status == "ongoing" ? "red" : "black"}} onClick={handleStatus}>Đang tiến hành</a>
                 </p>
             </div>
-
         </header>
+
         <div className="container">
-            <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
-            {series.map((series, index) => (
-              <Grid key={series.id}>
-                <ListItem
-                  alignItems="flex-start"
-                  className={`list-item ${
-                    index % 2 === 0 ? "even-item" : "odd-item"
-                  }`}
+          {series ? ( <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+            {series && series.map((series, index) => (
+              <Stack key={series.id} direction="row" 
+              className={`list-item ${
+                index % 2 === 0 ? "even-item" : "odd-item"
+              }`}
+              justifyContent="space-between"
+              padding="10px">
+          <Stack direction="row" justifyContent="flex-start">
+              <Stack direction="column"
+                // middle align
+                alignItems="center"
+              >
+                <SeriesThumbnail src={series.cover} size={1} shadow={false} />    
+                <Rating name="read-only" value={series.averageRating} readOnly size="small"/>
+              </Stack>
+              
+            
+
+              <Stack direction="column" alignItems="left" paddingLeft="10px">
+                <Typography
+                  component="span"
+                  variant="body1"
+                  textAlign="left"
+                  // on hover
+                  sx={{
+                    '&:hover': {
+                      color: "red",
+                      cursor: "pointer",
+                    },
+                  }}
                   onClick={() => {
                     window.location.href = paths.series(series.slug);
                   }}
-                //   onMouseEnter={() => handleMouseEnter(index)}
-                //   onMouseLeave={handleMouseLeave}
-                  key={series.id}
                 >
-                  <ListItemAvatar sx={{marginRight: "1rem"}}>
-                    <SeriesThumbnail src={series.cover} size={2} shadow={false} />
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary={
-                      <Typography
-                        component="span"
-                        variant="body1"
-                        // color={hoveredIndex === index ? "secondary" : "text.primary"}
-                      >
-                        {series.title}
-                      </Typography>
-                    }
-                    secondary={
-                      <React.Fragment>
-                        {series.genres ? series.genres.map((element) => (
-                          // <a key={element}> {mapper.genre_name_mapper[element]} {element === series.genres[series.genres.length - 1] ? "" : "-"}</a>
-                          <Genre name={element} key={element} />
-                        )) : ""}
-                        <br />
-                        <Typography
-                          sx={{ display: 'inline' }}
-                          component="span"
-                          variant="body2"
-                          color="text.primary"
-                        >
-                          Chương {series.totalChapter}
-                        </Typography>
-                        {"\t(" + utils.timeSince(series.updatedDate) + ")"}
-                        <Typography>{series.description.length > 300 ? series.description.substring(0, 300) + "..." : series.description
-                        }</Typography>
-                      </React.Fragment>
-                    
-                    }
-                  />
-                  {/* Positioning author's name at the rightmost */}
-                  <ListItemSecondaryAction>
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                    >
-                      Tác giả: {series.author.name}
-                    </Typography>
-                  </ListItemSecondaryAction>
-                </ListItem>
-              </Grid>
+                  <strong>{series.title}</strong>
+                </Typography>
+                <Typography
+                  component="span"
+                  variant="body1"
+                  color={hoveredIndex === index ? "secondary" : "text.primary"}
+                >
+                  {series.genres ? series.genres.map((genre) => (
+                        // <a key={element}> {mapper.genre_name_mapper[element]} {element === series.genres[series.genres.length - 1] ? "" : "-"}</a>
+                        <Genre name={genre.name} key={genre.id} color="black" borderRadius='3px' border="1px solid rgb(191, 191, 191)" />
+                      )) : ""}
+                </Typography>
+                {/* <Link to={paths.chapter(series.slug, series.chapterNumber)}> */}
+                  <Typography
+                    component="span"
+                    variant="body1"
+                    color={index ? "secondary" : "text.primary"}
+                    onClick={() => {window.location.href=paths.chapter(series.slug, series.chapterNumber)}}
+                    // on hover
+                    sx={{
+                      color: hoveredIndex === index ? "red" : "black",
+                      '&:hover': {
+                        color: "red",
+                        cursor: "pointer",
+                      },
+                    }}
+                  >
+                  {series.chapterTitle}
+                  </Typography>
+                {/* </Link> */}
+                <Typography
+                  component="span"
+                  variant="inherit"
+                  // set description color to be secondary
+                  color={hoveredIndex === index ? "secondary" : "text.secondary"}
+                  fontSize="0.8rem"
+                >{series.description.length > 500 ? series.description.substring(0, 500) + "..." : series.description}
+                </Typography>
+                <Typography
+                component="span"
+                variant="subtitle2"  // flex end
+                // on hover  
+              >
+                Cập nhật {utils.timeSince(series.updatedAt)} bởi <Typography
+                  component="span"
+                  variant="body2"
+                  textAlign="left"
+                  color={hoveredIndex === index ? "secondary" : "text.primary"}
+                  // on hover
+                  sx={{
+                    color: "#3f51b5",
+                    '&:hover': {
+                      fontWeight: "bold",
+                      cursor: "pointer",
+                    },
+                  }}
+                  onClick={() => {window.location.href = paths.profile(series.author.username)}}
+                >
+                  {series.author.username}
+                </Typography>
+              </Typography>
+              </Stack>
+              
+              
+            </Stack>
+          </Stack>    
             ))}
-          </List>
+          </List>) : (
+            <CircularProgress />
+          )}
+           
         </div>
       
     </div>

@@ -19,6 +19,8 @@ import "./Navbar.css";
 import PropType from 'prop-types';
 import LoginForm from '../form/LoginForm';
 import RegistrationForm from '../form/RegistrationForm';
+import NavbarGenres from './NavbarGenres';
+
 
 
 
@@ -107,7 +109,6 @@ export default function MyNavbar ({ currentUser, logOut }) {
     }
   };
 
-  
 
 
   return (
@@ -117,11 +118,9 @@ export default function MyNavbar ({ currentUser, logOut }) {
         <Navbar.Brand href={paths.home} className="navbar-brand" 
             style={{
               color: "rgb(233, 233, 233)",
-              // move down
               position: "relative",
               top: "5px",
               padding: "0px",
-
               fontSize: "30px",
             }}>
               VietLinhTinh
@@ -129,13 +128,16 @@ export default function MyNavbar ({ currentUser, logOut }) {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           
-            <NavDropdown title="Genres" id="basic-nav-dropdown" className="navbar-dropdown">
+            {/* <NavDropdown title="Thể loại" id="basic-nav-dropdown" className="navbar-dropdown">
                 {genres.map((genre, index) => (
                   <NavDropdown.Item key={index} href={`/genre/${genre.name.toLowerCase()}`} className="navbar-dropdown-item">
                     {utils.genre_name_mapper[genre.name]}
                   </NavDropdown.Item>
                 ))}
-            </NavDropdown>
+            </NavDropdown> */}
+            
+              <NavbarGenres genres={genres.map(genre => genre.name)} />
+            
          
 
             <Nav.Link href="#">
@@ -195,25 +197,29 @@ export default function MyNavbar ({ currentUser, logOut }) {
             ) : (
                 <>
                     <Stack direction="row" sx={{ alignItems: 'center', '& > :not(style)': { m: 1 } }}>
-                      <Nav.Link onClick={handleLoginClick} style={{ color: "rgb(233, 233, 233)", position: 'relative' }}>
-                        Login
+                      <Nav.Item onClick={handleLoginClick} style={{ 
+                        color: "rgb(233, 233, 233)", 
+                        position: 'relative',
+                        cursor: 'pointer'
+                      }}>
+                        Đăng nhập
                         {/* {clicking === "login" && <ArrowDropDownOutlinedIcon style={{ color: "rgb(233, 233, 233)", position: 'absolute', bottom: '-20px', left: '50%', transform: 'translateX(-50%)', cursor: 'pointer' }} onClick={handleLoginClick} />} */}
                         {clicking === "login" && <ArrowDropUpOutlinedIcon fontSize="large" style={{ color: "rgb(100, 0, 50)", position: 'absolute', bottom: '-70px', left: '50%', transform: 'translateX(-50%)', fontSize:"6rem" }} onClick={handleLoginClick} />}
                         {showLoginForm && (
                             <LoginForm setShowLoginForm={setShowLoginForm} loginFormRef={loginFormRef} />
                         )}
-                      </Nav.Link>
+                      </Nav.Item>
                     
                     </Stack >
                     
                     <Stack direction="row" sx={{ alignItems: 'center', '& > :not(style)': { m: 1 } }}>
-                      <Nav.Link onClick={handleRegisterClick} style={{ color: "rgb(233, 233, 233)", position: 'relative' }}>
-                        Register
+                      <Nav.Item onClick={handleRegisterClick} style={{ color: "rgb(233, 233, 233)", position: 'relative', cursor: 'pointer' }}>
+                        Đăng ký
                         {clicking === "register" && <ArrowDropUpOutlinedIcon fontSize="large" style={{ color: "rgb(100, 0, 50)", position: 'absolute', bottom: '-70px', left: '50%', transform: 'translateX(-50%)', fontSize: "6rem" }} onClick={handleRegisterClick} />}
                         {showRegistrationForm && (
                             <RegistrationForm setShowRegistrationForm={setShowRegistrationForm} registrationFormRef={registrationFormRef} />
                         )}
-                      </Nav.Link>
+                      </Nav.Item>
                     </Stack >
                     
                 </>

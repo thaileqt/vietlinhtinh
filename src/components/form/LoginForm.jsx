@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { TextField, Button, FormControlLabel, Checkbox, Link, Box } from '@mui/material';
+import { TextField, Button, FormControlLabel, Checkbox, Link, Box, FormGroup } from '@mui/material';
 import AuthService from '../../services/auth.service';
 
 
@@ -18,7 +18,7 @@ export default function LoginForm({ setShowLoginForm, loginFormRef }) {
         .catch((error) => {
             console.error('Error logging in:', error);
         });
-        setShowLoginForm(false);
+    setShowLoginForm(false);
   };
 
   return (
@@ -43,19 +43,19 @@ export default function LoginForm({ setShowLoginForm, loginFormRef }) {
      
 
       {/* Login form */}
-      <form onSubmit={handleLogin}>
+      <FormGroup onSubmit={handleLogin}>
         {/* Username Input */}
         <TextField
-          label="Username"
+          label="Tên đăng nhập"
           variant="standard"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           sx={{
-            backgroundColor: 'transparent', // Transparent background
+            backgroundColor: 'transparent',
             borderBottom: '1px solid #fff',
             width: '100%',
             '& .MuiInputLabel-root': {
-              color: 'rgba(255, 255, 255, 0.9)', // Slightly darker white
+              color: 'rgba(255, 255, 255, 0.9)', 
             },
             '& .MuiInputBase-input': {
               color: 'white',
@@ -65,7 +65,7 @@ export default function LoginForm({ setShowLoginForm, loginFormRef }) {
 
         {/* Password Input */}
         <TextField
-          label="Password"
+          label="Mật khẩu"
           type="password"
           variant="standard"
           value={password}
@@ -85,21 +85,29 @@ export default function LoginForm({ setShowLoginForm, loginFormRef }) {
 
         {/* Checkbox and Forgot Password */}
         <FormControlLabel
-            control={<Checkbox color="primary" />}
-            label="Remember me"
-            sx={{ color: 'white', fontSize: '14px'}}
+          control={
+            <Checkbox
+              value="remember"
+              color="primary"
+            />
+          }
+          label="Nhớ tài khoản"
+          sx={{ color: 'rgb(233, 233, 233)', fontSize: '14px' }}
         />
 
+
+
         <Link href="#" variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.9)', fontSize: '14px', textDecoration: 'none'}}>
-            Forgot password?
+            Quên mật khẩu?
         </Link>
+
         {/* Login Button */}
         <div style={{ //center the button
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
         }}>
-            <Button
+          <Button
             type="submit"
             variant="contained"
             sx={{
@@ -116,11 +124,11 @@ export default function LoginForm({ setShowLoginForm, loginFormRef }) {
                 },
             }}
             onClick={handleLogin}
-            >
-            Login
-            </Button>
+          >
+            Đăng nhập
+          </Button>
         </div>
-      </form>
+      </FormGroup>
     </Box>
   );
 }
