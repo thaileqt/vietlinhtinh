@@ -53,7 +53,7 @@ export default function Comment({  data }) {
                 <Grid container spacing={2}>
                 {/* Left Column: Avatar */}
                 <Grid item>
-                    <Avatar style={avatarStyles} src={(data && data.user.cover) ? data.user.cover : default_avatar} alt={data.user.username} variant='square' />
+                    <Avatar style={avatarStyles} src={(data && data.user.cover) ? data.user.cover : "https://cdn.dribbble.com/users/1463082/screenshots/4325775/__________-1.png"} alt={data.user.username} variant='square' />
                 </Grid>
 
                 {/* Right Column: User Info and Content */}

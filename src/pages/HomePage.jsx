@@ -77,14 +77,14 @@ const Home = () => {
       </div>
 
       <div>
-        
+         <SeriesCarousel seriesList={latestSeriesList} heading={"Mới ra mắt"} />
+      </div>
+
+      <div>
         <RecentUpdatedSeries seriesList={recentUpdatedSeries} handlePageChange={handlePageChange} />
       </div>
       
-      <div>
-        
-         <SeriesCarousel seriesList={latestSeriesList} heading={"Mới ra mắt"} />
-      </div>
+    
       
     </div>
 

@@ -59,7 +59,7 @@ const Profile = () => {
       (profileData && (
         <>
         <MyBreadcrumb items={[profile_username]} />
-        <div className="container mt-4">
+        <div className="container mt-4" style={{minWidth: "100vh"}}>
         <Grid container spacing={3}>
           {/* Left Column: User Profile */}
           <Grid item xs={12} md={3}>

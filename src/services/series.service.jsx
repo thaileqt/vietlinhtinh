@@ -3,7 +3,7 @@ import request_utils from "../commons/request_utils";
 const API_URL = request_utils.host + "/api/series";
 
 const SeriesService = {
-    getSeriesBySlug: (slug) => request_utils.handleGetRequest(API_URL + "/" + slug),
+    getSeriesBySlug: (slug) => request_utils.handleGetRequest(API_URL + "/get-by-slug/" + slug),
     getSeriesByUsername: (username, page, size) => request_utils.handleGetRequest(API_URL + "/get-by-username/" + username + `?page=${page}&&size=${size}`),
     getHotSeries: (seriesCount) => request_utils.handleGetRequest(API_URL + "/get-hot-series/" + seriesCount),
     getRecentCreatedSeries: (page, size) => request_utils.handleGetRequest(API_URL + "/get-recent-created-series?page=" + page + "&&size=" + size),

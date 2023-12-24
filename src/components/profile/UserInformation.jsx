@@ -1,6 +1,7 @@
 import { Avatar, Button, Grid, Typography } from '@mui/material';
 import CoffeeIcon from '@mui/icons-material/LocalCafe'; // Assuming Coffee Icon is available in Material-UI
 import PersonAddIcon from '@mui/icons-material/PersonAdd'; // Icon for Follow button
+import PropTypes from 'prop-types';
 
 export default function UserInformation({ user }) {
   return (
@@ -42,7 +43,11 @@ export default function UserInformation({ user }) {
             {user.name}
           </Typography>
           <Typography variant="h6" sx={{width: '100%', textAlign: 'center',}}>
-            {user.roles.map((role) => role.name).join(', ')}
+            {user.roles.map((role) => {
+              if (role.name === "ROLE_ADMIN") {
+                return "Admin";
+              }
+            }).join(', ')}
           </Typography>
         </Grid>
       </Grid>
@@ -87,6 +92,10 @@ export default function UserInformation({ user }) {
   );
 };
 
+
+UserInformation.propTypes = {
+  user: PropTypes.object.isRequired,
+};
 
 
 
