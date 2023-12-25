@@ -73,13 +73,13 @@ export default function UserInformation({ user }) {
             Tham gia từ ngày 14/10/2021
         </Typography>
         <Typography variant="h10">
-            Followers: 0
+            Theo dõi: 0
         </Typography>
         <Typography variant="h10">
-            Following: 0
+            Đang theo dõi: 0
         </Typography>
         <Typography variant="h10">
-            Comments: 0
+            Đã đánh giá: 0
         </Typography>
     </Grid>
 

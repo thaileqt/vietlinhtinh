@@ -65,7 +65,7 @@ const ChapterDetail = () => {
         .then((response) => {
             setIsLike(response.data);
         })
-        .catch((error) => { console.error('Error fetching like:', error); });
+        .catch((error) => { console.error('Error fetching like:', error); setIsLike(false); });
           
         ChapterService.countTotalChapters(slug)
         .then((response) => { 

@@ -7,9 +7,9 @@ import utils from '../../commons/utils';
 const Genre = ({ 
   name, 
   size, 
-  color, 
+  color="black", 
   backgroundColor="rgb(212, 212, 212)", 
-  border='1px solid rgb(237, 237, 237)', 
+  border="1px solid rgb(191, 191, 191)",
   borderRadius="3px" ,
   margin='0px 10px 3px 0px',
   padding='2px 4px',
@@ -45,7 +45,7 @@ const Genre = ({
     borderRadius: borderRadius,
     // backgroundColor: getBackgroundColor(name.toUpperCase()), // Set background color based on genre name
     backgroundColor: backgroundColor ? backgroundColor : getBackgroundColor(name ? name.toUpperCase() : "Unknown"),
-    color: color ? color : 'white',
+    color: color,
     // fit the content
     display: 'inline-block',
     // if size exist then set the font size to size, otherwise set it to 0.6rem

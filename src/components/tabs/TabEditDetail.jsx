@@ -28,7 +28,7 @@ const TabEditDetail = ({series}) => {
   const [thumbnail, setThumbnail] = useState(series.cover);
   const [title, setTitle] = useState(series.title);
   const [description, setDescription] = useState(series.description);
-  const [seriesGenres, setSeriesGenres] = useState(series.genres); // list of string ["name1", "name2"]
+  const [seriesGenres, setSeriesGenres] = useState(series.genres.map((genre) => genre.name)); // list of string ["name1", "name2"]
   const [genres, setGenres] = useState(null); // 
   const [state, setState] = useState(series.seriesState);
   const [thumbnailSource, setThumbnailSource] = useState('local'); // State to manage the selected thumbnail source

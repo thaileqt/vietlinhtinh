@@ -3,6 +3,8 @@ import {
     Box,
     Button,
     Container,
+    Rating,
+    Stack,
     TextField,
     Typography,
 } from '@mui/material';
@@ -11,6 +13,8 @@ import SeriesService from '../../services/series.service';
 import ChapterService from '../../services/chapter.service';
 import paths from '../../commons/paths';
 import SeriesThumbnail from '../../components/avatar/SeriesThumbnail';
+import MyBreadcrumb from '../../components/layout/Breadcrumb';
+import Genre from '../../components/misc/Genre';
 
 const EditChapterDetail = () => {
     // Sample series details (replace this with your actual data)
@@ -83,24 +87,45 @@ const EditChapterDetail = () => {
     }
 
     return (
-        (chapter && series &&
-            <Container maxWidth="lg">
-            {/* Container 1 - Series Details */}
-            <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-                {/* Series Cover */}
-                <Box sx={{ width: '30%', marginRight: '2rem' }}>
-                    <SeriesThumbnail src={series.cover} />
-                </Box>
-                {/* Title and Author */}
-                <Box sx={{ width: '70%' }}>
-                    <Typography variant="h4" gutterBottom>
-                        {series.title}
+        <div style={{minWidth: "100vh"}}>
+        {chapter && series &&
+            <>
+
+            <MyBreadcrumb items={[series.title, chapter.title]} />
+            <header style={{
+                fontSize: "0.9rem", 
+                // darker than white
+                backgroundColor: "#f5f5f5",
+                // padding top
+                paddingTop: "1rem",
+                paddingBottom: "0.5rem",
+            }}>
+                <div className="container">
+                <Stack direction="row" spacing={2}>
+                <Stack direction="column" spacing={2} alignItems="center">
+                    <SeriesThumbnail src={series.cover} size={1} />
+                    <Rating name="read-only" value={series.rating} readOnly />
+                </Stack>
+                <Stack direction="column" spacing={1}>
+                    <h2>{series.title}</h2>
+                    <Stack direction="row" spacing={2}>
+                    {series.genres.map((genre) => (
+                        <span key={genre.id} className="genre">
+                        <Genre name={genre.name} />
+                        </span>
+                    ))}
+                    </Stack>
+                    <Typography variant="body2" color="text.secondary">
+                    {series.description}
                     </Typography>
-                    <Typography variant="h6" gutterBottom>
-                        {series.author ? series.author.name : "asd"}
-                    </Typography>
-                </Box>
-            </Box>
+
+                </Stack>
+                
+                </Stack>
+                </div>
+            </header>
+
+            <div className="container">
 
             {/* Container 2 - Edit Chapter Title and Content */}
             <Box sx={{ width: '100%' }}>
@@ -134,9 +159,10 @@ const EditChapterDetail = () => {
                 </Button></Link>
             </Box>
 
-        </Container>
-        )
-        
+            </div>
+            </>
+}
+        </div>
   );
 };
 

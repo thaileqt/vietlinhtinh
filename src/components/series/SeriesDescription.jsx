@@ -17,12 +17,16 @@ export default function SeriesDescription({ series }) {
             {/* Description */}
             {series.description ? (
             <p className="description">                           
-                {expanded ? series.description : `${series.description.slice(0, truncatedDescriptionLength)}...`}
+                {/* {expanded ? series.description : `${series.description.slice(0, truncatedDescriptionLength)}...`}
                 
                 {series.description.length > truncatedDescriptionLength && (
                     <span className="read-more" onClick={toggleDescription}>
                         {expanded ? 'Read Less' : 'Read More'}
                     </span>
+                )} */}
+                {series.description.split('\n').map((item, key) => {
+                    return <p key={key}>{item}<br/></p>
+                }
                 )}
 
             </p>

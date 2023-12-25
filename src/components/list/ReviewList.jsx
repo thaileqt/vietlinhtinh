@@ -51,7 +51,7 @@ export default function ReviewList({ reviews }) {
                             right: 0,
                             whiteSpace: 'nowrap',
                             }}>
-                            {utils.timeSince(reviews.createdAt)}
+                            {utils.timeSince(review.createdAt)}
                             </Typography>
                         </ListItemText>
                         

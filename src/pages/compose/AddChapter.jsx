@@ -26,7 +26,7 @@ const AddChapter = () => {
     title: '',
     content: '',
     seriesSlug: slug,
-    status: 'draft', // Add status field with initial value as 'draft'
+    chapterState: 'draft', // Add status field with initial value as 'draft'
   });
   const [series, setSeries] = useState(null); // Add series state
   const [error, setError] = useState('');
@@ -51,12 +51,29 @@ const AddChapter = () => {
   }, [slug]);
         
 
-  const handleSubmit = (e) => {
+  const handleSaveDraft = (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setError('');
+    chapterData.chapterState = 'draft'
+
+    ChapterService.addChapter(chapterData)
+      .then(() => {
+        window.location.href = paths.compose.allChapter(slug);
+      })
+      .catch((error) => {
+        setIsSubmitting(false);
+        setError('Error adding chapter. Please try again.');
+        console.error('Error adding chapter:', error);
+      });
+  };
+
+  const handlePublish = (e) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     setError('');
-    console.log(chapterData)
+    chapterData.chapterState = 'published'
 
     ChapterService.addChapter(chapterData)
       .then(() => {
@@ -95,7 +112,7 @@ const AddChapter = () => {
           justifyContent="center"
           pl={2} // Left padding to create space between image and text
         >
-          <Typography variant="h6" textAlign="left">
+          <Typography variant="h6" textAlign="left" id="series-title">
             {series.title}
           </Typography>
           <Typography variant="subtitle2" textAlign="left">
@@ -110,8 +127,8 @@ const AddChapter = () => {
 
 
           <Stack direction="row" spacing={1} justifyContent="right">
-            <TransparentButton name="Save Draft" color="rgb(100, 0, 50)" />
-            <TransparentButton name="Publish" invert={true} color="rgb(100, 0, 50, 0.9)" textColor="white" size={1} />
+            <TransparentButton name="Save Draft" color="rgb(100, 0, 50)" onClick={handleSaveDraft} />
+            <TransparentButton name="Publish" invert={true} color="rgb(100, 0, 50, 0.9)" textColor="white" size={1} onClick={handlePublish}/>
           </Stack>
         </Stack>
       </Paper>
@@ -132,7 +149,7 @@ const AddChapter = () => {
           <Typography padding="15px 0">
             <strong>Title</strong>
           </Typography>
-          <TextField id="outlined-basic" variant="outlined" />
+          <TextField id="chapter-title" variant="outlined" onChange={handleChange} name='title'/>
 
 
           <div style={{ padding: "15px 0" }}>
@@ -140,7 +157,7 @@ const AddChapter = () => {
           </div>
 
 
-          <Typography padding="15px 0">
+          <Typography padding="15px 0" onChange={handleChange}>
             <strong>Chapter</strong>
           </Typography>
 
@@ -157,6 +174,8 @@ const AddChapter = () => {
                 multiline
                 rows={10}
                 fullWidth
+                name="content"
+                onChange={handleChange}
               />
             </Paper>
           </Stack>

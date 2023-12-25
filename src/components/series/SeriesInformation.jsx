@@ -27,8 +27,31 @@ export default function SeriesInformation({ series }) {
             </ListItemAvatar>
 
               <Grid>
-                <Typography variant="h4"><p>{series.title}</p></Typography>
-                <Rating name="read-only" value={series.averageRating ? series.averageRating : 0} readOnly />
+                <Typography variant="h4">{series.title}</Typography>
+                <Grid container spacing={3} alignItems="center">
+                  <Grid item>
+                    <VisibilityIcon fontSize="small" />
+                    <Typography variant="body1" component="span" ml={1}>
+                      {series.totalViews} lượt xem
+                    </Typography>
+                  </Grid>
+
+                  <Grid item>
+                  <Favorite fontSize="small" />
+                    <Typography variant="body1" component="span" ml={1}>{
+                      series.totalLikes} yêu thích
+                    </Typography>
+                  </Grid>
+                  
+                  <Grid item>
+                    <ChapterIcon fontSize="small" />
+                    <Typography variant="body1" component="span" ml={1}>
+                      {series.totalChapters} chương
+                    </Typography>
+                  </Grid>
+                </Grid>
+                <br />
+                
                 <p>
                   {series.genres.map((genre) => (
                     <Link to="#" key={genre.id}>
@@ -36,26 +59,10 @@ export default function SeriesInformation({ series }) {
                     </Link>
                   ))}
                 </p>
-                <Grid container spacing={3} alignItems="center">
-                  <Grid item>
-                    <VisibilityIcon fontSize="small" />
-                    <Typography variant="body1" component="span" ml={1}>
-                      {series.totalViews}
-                    </Typography>
-                  </Grid>
-
-                  <Grid item>
-                  <Favorite fontSize="small" />
-                    <Typography variant="body1" component="span" ml={1}>{series.totalLikes}</Typography>
-                  </Grid>
-                  
-                  <Grid item>
-                    <ChapterIcon fontSize="small" />
-                    <Typography variant="body1" component="span" ml={1}>
-                      {series.totalChapters}
-                    </Typography>
-                  </Grid>
-                </Grid>
+                <div>
+                  <Rating name="read-only" value={series.averageRating ? series.averageRating : 0} readOnly /> 
+                  ({series.reviews.length} lượt đánh giá)
+                </div>
                 <p>
                   <StatusIcon fontSize="small" />
                   <Typography variant="body1" component="span" ml={1}>

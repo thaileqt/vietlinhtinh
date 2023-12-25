@@ -9,6 +9,8 @@ import UserService from "../services/user.service";
 import { useParams } from "react-router-dom";
 import MessageService from "../services/message.service";
 import MyBreadcrumb from "../components/layout/Breadcrumb";
+import ReviewSection from "../components/profile/ReviewSection";
+import ReadingListSection from "../components/profile/ReadingList";
 
 
 
@@ -41,13 +43,14 @@ const Profile = () => {
   const renderTabContent = () => {
     switch (tabValue) {
       case "one":
-        return <MessageSection messages={messages} profile_username={profile_username} />; // Replace with content for the "Tin nhắn" tab
+        return <MessageSection messages={messages} profile_username={profile_username} />; 
       case "two":
-        return <SeriesSection profile_username={profile_username} />; // Replace with content for the "Tủ truyện" tab
+        return <SeriesSection profile_username={profile_username} />; 
       case "three":
-        return <div>Sáng tác</div>; // Replace with content for the "Sáng tác" tab
+        return <ReviewSection />
       case "four":
-        return <div>Đánh giá</div>; // Replace with content for the "Đánh giá" tab
+        return <ReadingListSection />
+
       default:
         return null;
     }
@@ -55,8 +58,10 @@ const Profile = () => {
 
 
   return (
-    
-      (profileData && (
+    <div style={{
+      minHeight: "100vh",
+    }}>
+      {profileData && (
         <>
         <MyBreadcrumb items={[profile_username]} />
         <div className="container mt-4" style={{minWidth: "100vh"}}>
@@ -81,7 +86,8 @@ const Profile = () => {
 
     </div>
     </>
-      ))
+      )}
+      </div>
   );
 };
 

@@ -51,7 +51,7 @@ export default function UserOwnedSeries({ series }) {
                   <Stack direction="column" alignItems="center" paddingLeft="10px">
                     {/* Thumbnail */}
                     <SeriesThumbnail src={series.cover} borderRadius={3} size={0.9} 
-                      handleImageClick={() => window.location.href = paths.series(series.slug)} />
+                      handleImageClick={() => window.location.href = paths.compose.allChapter(series.slug)} />
                     {/* Rating */}
                     <Rating name="read-only" value={series.averageRating ? series.averageRating : 0} readOnly precision={0.5} />
                     <div><RateReviewOutlined fontSize="small" /> {series.totalReviews}</div>
@@ -60,7 +60,7 @@ export default function UserOwnedSeries({ series }) {
 
                   <Stack direction="column">
                     <Typography variant="h5"
-                    onClick={() => window.location.href = paths.series(series.slug)}
+                    onClick={() => window.location.href = paths.compose.allChapter(series.slug)}
                     // add hover will change color
                     sx={{ 
                       '&:hover': {

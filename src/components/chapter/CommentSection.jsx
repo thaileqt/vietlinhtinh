@@ -47,7 +47,7 @@ export default function CommentSection({ comments, chapterId }) {
             padding: "20px",
         }}>
             
-            <h2>Comments</h2>
+            <h2>Bình luận</h2>
             {currentUser ? (
                 <CommentForm
                 commentText={commentText}
@@ -55,7 +55,7 @@ export default function CommentSection({ comments, chapterId }) {
                 handleSubmit={handleSubmit}
             />
             ) : (
-                <p>Log in to comment</p>
+                <p>Đăng nhập để bình luận</p>
             )}
             
             
