@@ -2,7 +2,9 @@ import axios from "axios";
 
 
 // const hostname = "http://localhost:8080";
-const hostname = "https://vietlinhtinh-api-production.up.railway.app";
+// const hostname = "https://vietlinhtinh-api-production.up.railway.app";
+// eslint-disable-next-line no-undef
+const hostname = import.meta.env.VITE_API_URL;
 
 const getToken = () => {
     return JSON.parse(localStorage.getItem("token"));
